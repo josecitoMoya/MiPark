@@ -1,8 +1,32 @@
 const express = require("express");
+const config = require("./config");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
+// const routes = require("./routes");
+const Users = require("./models/Users.js");
+const db = require("./db");
+
+//CONSTANTES
+const PORT = config.PORT;
 const app = express();
 
-const port = 3001;
+//MIDLEWARES
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT"],
+  })
+);
+app.use(express.json());
+app.use(cookieParser());
+app.use(morgan("tiny"));
 
-app.listen(port, () => {
-  console.log("Servidor escuchando en ", port);
+// app.use("/api", routes);
+
+db.sync({ force: false }).then(() => {
+  console.log("db connected");
+  app.listen(PORT, () => {
+    console.log(`El servidor esta escuchando en el puerto ${PORT}`);
+  });
 });
