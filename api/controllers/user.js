@@ -1,11 +1,12 @@
 const User = require("../models/Users");
+const Token = require("../utils/Token");
 
 class UserController {
   static async registerUser(req, res) {
-    const [user, created] = await User.findOrCreate(
-      { where: { email: req.body } },
-      req.body
-    );
+    const [user, created] = await User.findOrCreate({
+      where: { email: req.body.email },
+      defaults: req.body,
+    });
 
     if (created) {
       return res
@@ -28,7 +29,7 @@ class UserController {
         lastName: req.body.lastName,
         email: req.body.email,
       };
-      const token = Token.validatePassword(payload);
+      const token = Token.generateToken(payload);
       res
         .status(200)
         .cookie("token", token)
@@ -39,17 +40,27 @@ class UserController {
   }
 
   static async logOutUser(req, res) {
-    res.status(200).token("token", "");
+    res.clearCookie("token");
+    res.sendStatus(204);
   }
 
   static async getUser(req, res) {
-    const token = req.cookie.token;
-    const payload = await Token.validateToken(token);
+    const token = req.cookies.token;
+    if (token) {
+      const payload = await Token.validateToken(token);
 
-    if (decoded) {
-      return res
-        .status(200)
-        .send({ message: "Token verificated", data: payload });
+      if (payload) {
+        const user = await User.findOne({ where: { email: payload.email } });
+        const data = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          admin: user.admin,
+        };
+        return res
+          .status(200)
+          .send({ message: "Token verificated", data: data });
+      }
     }
     res.status(500).send({ message: "Token invalid" });
   }
@@ -57,21 +68,19 @@ class UserController {
   static async modUser(req, res) {
     try {
       // ACORDAR CON EL FRONT COMO RECIBIS LA MODIFICACION  PRA MODICAR LA INSTACIA
-      const [numRows, updatedRows] = await User.update(req.body, {
-        where: { email: req.body.email },
+      const user = await User.findOne({ where: { email: req.body.email } });
+      await user.update(req.body);
+      const payload = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+      };
+      return res.status(200).send({
+        message: `User ${user.firstName} ${user.lastName} has been updated`,
+        data: payload, // MANDO INFO DE USUARIO PARA QUE EL FRONT YA RECIBA LA DATA DEL USER MODIFICADA
       });
-
-      if (numRows > 0) {
-        return res
-          .status(200)
-          .send({ message: `Se actualizaron ${numRows} filas.` });
-      } else {
-        res
-          .status(200)
-          .send({ message: "No se encontraron filas para actualizar." });
-      }
     } catch (error) {
-      res.status(500).json({ message: "No se pudo actualizar el usuario." });
+      res.status(500).json({ message: "User couldn't be updated" });
     }
   }
 }
