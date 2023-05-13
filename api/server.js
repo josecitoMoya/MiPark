@@ -3,6 +3,8 @@ const config = require("./config");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+// const routes = require("./routes");
+const Users = require("./models/Users.js");
 const db = require("./db");
 
 //CONSTANTES
@@ -19,6 +21,8 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("tiny"));
+
+// app.use("/api", routes);
 
 db.sync({ force: false }).then(() => {
   console.log("db connected");
