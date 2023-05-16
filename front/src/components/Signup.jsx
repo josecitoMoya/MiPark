@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Input, Button, Text, Box, Center } from "@chakra-ui/react";
 
 const Signup = () => {
-  const nombre = useInput();
-  const apellido = useInput();
+  const firstName = useInput();
+  const lastName = useInput();
   const email = useInput();
   const password = useInput();
 
@@ -15,14 +15,16 @@ const Signup = () => {
   const clickHandler = (e) => {
     e.preventDefault();
     const newUser = {
-      nombre: nombre.value,
-      apellido: apellido.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
       email: email.value,
       password: password.value,
     };
 
+    console.log("SOY LO QUE MANDO DESDE EL FRONT PARA EL REGISTRO", newUser);
+
     axios
-      .post("http://localhost:3000/api/user/signup", newUser)
+      .post("http://localhost:8080/api/user/register", newUser)
       .then(navigate("/"))
       .catch((err) => console.error(err));
   };
@@ -43,6 +45,7 @@ const Signup = () => {
           <br />
           <form onSubmit={clickHandler}>
             <Input
+              {...firstName}
               htmlSize={50}
               type="text"
               width="auto"
@@ -52,6 +55,7 @@ const Signup = () => {
             <br />
             <br />
             <Input
+              {...lastName}
               htmlSize={50}
               type="text"
               width="auto"
@@ -61,6 +65,7 @@ const Signup = () => {
             <br />
             <br />
             <Input
+              {...email}
               htmlSize={50}
               type="text"
               width="auto"
@@ -70,6 +75,7 @@ const Signup = () => {
             <br />
             <br />
             <Input
+              {...password}
               htmlSize={50}
               type="password"
               width="auto"

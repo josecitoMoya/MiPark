@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Input, Button, Text, Box, Center } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import useInput from "../hooks/useInput";
-import AuthContext from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 const Login = () => {
@@ -19,8 +19,10 @@ const Login = () => {
     };
 
     axios
-      .post("http://localhost:3000/api/user/login", logUser)
-      .then((res) => res.data)
+      .post("http://localhost:8080/api/user/login", logUser, {
+        withCredentials: false,
+      })
+      .then((res) => res.data.data)
       .then((res) => {
         user.logUser(res);
         navigate("/");
@@ -44,16 +46,18 @@ const Login = () => {
           <br />
           <form onSubmit={handleSubmit}>
             <Input
+              {...email}
               type="text"
               htmlSize={50}
               width="auto"
-              placeholder="Nombre"
+              placeholder="email"
               required
             />
             <br />
             <br />
 
             <Input
+              {...password}
               htmlSize={50}
               width="auto"
               type="password"

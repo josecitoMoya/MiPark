@@ -38,17 +38,31 @@ const Navbar = () => {
         <Box>
           <Heading>miPark</Heading>
         </Box>
-        <Menu>
-          <MenuButton as={Button}>Tenes usuario?</MenuButton>
-          <MenuList>
-            <Link to="/login">
-              <MenuItem>Iniciar Sesion</MenuItem>
-            </Link>
-            <Link to="/signup">
-              <MenuItem>Registrarse</MenuItem>
-            </Link>
-          </MenuList>
-        </Menu>
+        {user.isAutenticated ? (
+          <Menu>
+            <MenuButton as={Button}>{user.firstName}</MenuButton>
+            <MenuList>
+              <Link to="/login">
+                <MenuItem>Carrito</MenuItem>
+              </Link>
+              <Link to="/logout">
+                <MenuItem>Cerrar sesion</MenuItem>
+              </Link>
+            </MenuList>
+          </Menu>
+        ) : (
+          <Menu>
+            <MenuButton as={Button}>Tenes usuario?</MenuButton>
+            <MenuList>
+              <Link to="/login">
+                <MenuItem>Iniciar Sesion</MenuItem>
+              </Link>
+              <Link to="/signup">
+                <MenuItem>Registrarse</MenuItem>
+              </Link>
+            </MenuList>
+          </Menu>
+        )}
       </Flex>
     </div>
   );
