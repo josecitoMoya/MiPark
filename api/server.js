@@ -3,8 +3,10 @@ const config = require("./config");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-// const routes = require("./routes");
+const routes = require("./routes");
 const Users = require("./models/Users.js");
+const Cart = require("./models/Carts");
+const Parkings = require("./models/Parkings");
 const db = require("./db");
 
 //CONSTANTES
@@ -22,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("tiny"));
 
-// app.use("/api", routes);
+app.use("/api", routes);
 
 db.sync({ force: false }).then(() => {
   console.log("db connected");
