@@ -1,15 +1,20 @@
-import axios from "axios";
-import { Route, Routes } from "react-router";
-import { useContext, useEffect } from "react";
+import "./App.css";
 import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-import { AuthContext } from "./context/AuthContext";
+import { Route, Routes } from "react-router";
+import List from "./components/List";
+import Reserva from "./components/Reserva";
+import axios from "axios";
+import {useEffect } from "react";
 import Sidebar from "./components/Sidebar";
+
 
 function App() {
   //persistencia;
+ 
   const user = useContext(AuthContext);
+
   useEffect(() => {
     console.log("SOY LO QUYE VOY A MANDAR DESDE APP DEL FRONT", user);
     axios
@@ -20,27 +25,29 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Sidebar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div
-              style={{
-                marginLeft: "256px",
-                backgroundColor: "red",
-                width: "75%",
-              }}
-            >
-              <h1>Soy el HOME</h1>
-            </div>
-          }
-        />
+
+    <Sidebar />
+      
+    <Routes>
+        <Route path="/list" element={<List />}></Route>
+         <Route path="/" element={<h1>Soy el HOME</h1>} /> 
+         <Route path="/" element={<List />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </div>
+        <Route path="/reservation" element={<Reserva />} />
+
+          </Routes>
+     
+</div>
   );
 }
 
 export default App;
+
+           
+      
+           
+           
+           
+          
