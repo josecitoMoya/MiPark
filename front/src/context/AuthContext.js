@@ -3,8 +3,8 @@ import { useState } from "react";
 import { createContext } from "react";
 
 const initialState = {
-  name: "",
-  lastname: "",
+  firstName: "",
+  lastName: "",
   email: "",
   logUser: () => null,
   logOut: () => null,
@@ -14,16 +14,16 @@ export const AuthContext = createContext(initialState);
 
 const AuthContextProvider = ({ children }) => {
   const [auth, setAuth] = useState({
-    name: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     isAutenticated: false,
   });
 
   const logUser = (user) => {
     setAuth({
-      name: user.name,
-      lastname: user.lastname,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       isAutenticated: true,
     });
@@ -31,8 +31,8 @@ const AuthContextProvider = ({ children }) => {
 
   const logOut = () => {
     setAuth({
-      name: "",
-      lastname: "",
+      firstName: "",
+      lastName: "",
       email: "",
       isAutenticated: false,
     });
@@ -41,8 +41,8 @@ const AuthContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        name: auth.name,
-        lastname: auth.lastname,
+        firstName: auth.firstName,
+        lastName: auth.lastName,
         email: auth.email,
         isAutenticated: auth.isAutenticated,
         logUser,
