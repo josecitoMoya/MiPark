@@ -4,12 +4,15 @@ import { useNavigate } from "react-router";
 import useInput from "../hooks/useInput";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/user";
 
 const Login = () => {
   const navigate = useNavigate();
   const email = useInput();
   const password = useInput();
-  const user = useContext(AuthContext);
+  // const user = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,15 +21,19 @@ const Login = () => {
       password: password.value,
     };
 
+    // dispatch(addUser(logUser));
+
     axios
       .post("http://localhost:8080/api/user/login", logUser, {
-        withCredentials: false,
+        withCredentials: true,
       })
       .then((res) => res.data.data)
       .then((res) => {
-        user.logUser(res);
+        dispatch(addUser(res));
+        console.log("SOY RES DEl LOGIN DEL AXIOS EN FRONT", res);
         navigate("/");
       })
+      // .then(console.log("SOY USER DEl LOGIN DEL AXIOS EN FRONT", user))
       .catch((err) => console.error(err));
   };
 

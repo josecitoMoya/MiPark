@@ -6,48 +6,42 @@ import { Route, Routes } from "react-router";
 import List from "./components/List";
 import Reserva from "./components/Reserva";
 import axios from "axios";
-import {useEffect } from "react";
+import { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "./redux/user";
+import Navbar2 from "./components/Navbar2";
 
 function App() {
-  //persistencia;
- 
-  const user = useContext(AuthContext);
-
+  //Persistencia
+  const dispatch = useDispatch();
   useEffect(() => {
-    console.log("SOY LO QUYE VOY A MANDAR DESDE APP DEL FRONT", user);
     axios
-      .get("http://localhost:8080/api/user/persist")
-      .then((res) => user.logUser(res.data));
+      .get("http://localhost:8080/api/user/me", { withCredentials: true })
+      .then((res) => dispatch(addUser(res.data.data)))
+      .catch((err) => console.log(err));
   }, []);
+  //Fin de persisntencia
 
   return (
     <div className="App">
-      <Navbar />
-
-    <Sidebar />
-      
-    <Routes>
-        <Route path="/list" element={<List />}></Route>
-         <Route path="/" element={<h1>Soy el HOME</h1>} /> 
-         <Route path="/" element={<List />} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reservation" element={<Reserva />} />
-
-          </Routes>
-     
-</div>
+      <Navbar2 />
+      <br />
+      <Sidebar />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div style={{ marginLeft: "15%" }}>
+        <Routes>
+          <Route path="/" element={<List />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/reservation" element={<Reserva />} />
+        </Routes>
+      </div>
+    </div>
   );
 }
 
 export default App;
-
-           
-      
-           
-           
-           
-          
