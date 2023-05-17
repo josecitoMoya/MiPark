@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/user";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Login = () => {
       .then((res) => res.data.data)
       .then((res) => {
         dispatch(addUser(res));
-        console.log("SOY RES DEl LOGIN DEL AXIOS EN FRONT", res);
+        // console.log("SOY RES DEl LOGIN DEL AXIOS EN FRONT", res);
         navigate("/");
       })
       // .then(console.log("SOY USER DEl LOGIN DEL AXIOS EN FRONT", user))
@@ -73,8 +74,13 @@ const Login = () => {
             />
             <br />
             <br />
+            <Link to="/signup">
+              <h1>No tengo cuenta en miPark</h1>
+            </Link>
+            <br />
+            <br />
             <Button colorScheme="blue" type="submit">
-              Enviar
+              Iniciar Sesion
             </Button>
           </form>
         </Box>
