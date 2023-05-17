@@ -18,23 +18,22 @@ const Sidebar = () => {
       marginTop={"80px"}
       bg="lightblue"
       w="10%"
-      h="92vh"
+      h="92%"
       position="fixed"
-      left="0"
-      bottom="0" // Cambiar la propiedad de posicionamiento a "bottom"
-      padding="4"
-      boxShadow={"xl"}
+      left="0" // Cambiar la propiedad de posicionamiento a "left"
+      padding={5}
+      boxShadow={"2xl"}
     >
       <Flex direction="column" height="100%">
         <Box flex="1">
           <br />
           <Button colorScheme="gray" w={"95%"}>
-            Alquiler
+            Quiero ser huesped
           </Button>
           <br />
           <br />
           <Button colorScheme="gray" w={"95%"}>
-            Reserva
+            Quiero ser anfitrion
           </Button>
           <br />
           <br />
