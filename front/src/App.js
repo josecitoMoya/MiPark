@@ -7,27 +7,30 @@ import List from "./components/List";
 import Reserva from "./components/Reserva";
 import axios from "axios";
 import { useEffect } from "react";
-import Sidebar from "./components/Sidebar";
-
+import Sidebar from "./components/Sidebar"
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "./redux/user";
+import Navbar2 from "./components/Navbar2";
 function App() {
-  //persistencia;
-
-  /*Linea de Jose 
-   const user = useContext(AuthContext); */
-
+  //Persistencia
+  const dispatch = useDispatch();
   useEffect(() => {
-    /*  liena de Jose
-     console.log("SOY LO QUYE VOY A MANDAR DESDE APP DEL FRONT", user); */
-
     axios
-      .get("http://localhost:8080/api/user/persist")
-      .catch((error) => console.log(error));
+      .get("http://localhost:8080/api/user/me", { withCredentials: true })
+      .then((res) => dispatch(addUser(res.data.data)))
+      .catch((err) => console.log(err));
   }, []);
+  //Fin de persisntencia
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar2 />
+      <br />
       <Sidebar />
+      <br />
+      <br />
+      <br />
+      <br />
       <div style={{ marginLeft: "15%" }}>
         <Routes>
           <Route path="/" element={<List />} />
