@@ -99,14 +99,17 @@ class ParkingController {
     const parking = await Parkings.findOne({
       where: { id: req.params.id },
     });
-    const horarios = await Hours.findOne({ where: { parkingId: parking.id } });
+    let horarios = await Hours.findOne({ where: { parkingId: parking.id } });
+    horarios = horarios.dataValues;
     let horariosDisponibles = [];
     for (let horario in horarios) {
-      if (horario === true) horarios.push(horario);
+      if (horarios[horario] === true) {
+        horariosDisponibles.push(horario);
+      }
     }
     res.status(200).send({
       message: "Se envía el resultado de la búsqueda",
-      data: { parking: parking, horarios: horariosDisponibles },
+      data: { parking: parking, horariosDisponibles: horariosDisponibles },
     });
   }
 }
