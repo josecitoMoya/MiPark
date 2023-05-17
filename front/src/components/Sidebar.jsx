@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Link,
   Box,
@@ -13,6 +13,12 @@ import {
 } from "@chakra-ui/react";
 
 const Sidebar = () => {
+  const [prov, setProv] = useState("");
+
+  const handelprov = (e) => {
+    console.log(e);
+  };
+
   return (
     <Box
       marginTop={"80px"}
@@ -42,13 +48,12 @@ const Sidebar = () => {
             <MenuButton as={Button} colorScheme="gray" w={"95%"}>
               Provincia
             </MenuButton>
+
             <MenuList>
-              <Link to="/login">
-                <MenuItem>Entre Rios</MenuItem>
-              </Link>
-              <Link to="/signup">
-                <MenuItem>Salta</MenuItem>
-              </Link>
+              <MenuItem id="Entre Rios" onClick={() => handelprov()}>
+                Entre Rios
+              </MenuItem>
+              <MenuItem onClick={handelprov}>Salta</MenuItem>
             </MenuList>
           </Menu>
           <br />
