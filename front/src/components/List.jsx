@@ -74,17 +74,23 @@ const List = () => {
   ];
 
   const handleDetail = (e) => {
-    setLista([e]);
+    SetVista(!vista);
+    if (!vista) {
+      console.log("unico");
+      setLista([e]);
+    } else {
+      setLista(park);
+      console.log("muchos");
+    }
   };
 
   const handleReserva = (e) => {
-    //  console.log(e);
-    const { id } = e;
-    dispatch(addreserva(id));
+    const { id, provincia, ciduad, ubicacion } = e;
+    dispatch(addreserva({ id, provincia, ciduad, ubicacion }));
   };
 
   const [lista, setLista] = useState(park);
-  const [reserva, setReserva] = useState({});
+  const [vista, SetVista] = useState(false);
 
   useEffect(() => {
     console.log(lista);
@@ -95,7 +101,7 @@ const List = () => {
       <Wrap>
         {lista.map((park) => {
           return (
-            <Card maxW="md" key={park.id}>
+            <Card maxW="md" key={park.id} bg="blue.100">
               <CardBody>
                 <Image
                   onClick={() => handleDetail(park)}
@@ -105,31 +111,19 @@ const List = () => {
 
                   //  width={{ xl: 300 }}
                 />
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">Park reservation</Heading>
-                  <div>
-                    <li>Provincia :{park.provincia}</li>
-                    <li>ciudad : {park.ciudad}</li>
-                    <li>ubicacion : {park.ubicacion}</li>
-                  </div>
-                  <Text color="blue.600" fontSize="2xl">
-                    $450
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Link to="/reservation">
-                    <Button
-                      variant="solid"
-                      colorScheme="blue"
-                      onClick={() => handleReserva(park)}
-                    >
-                      Reserve now
-                    </Button>
-                  </Link>
+                <br />
+                <Link to="/reservation">
+                  <Button
+                    variant="solid"
+                    colorScheme="blue"
+                    onClick={() => handleReserva(park)}
+                  >
+                    Reserve now
+                  </Button>
+                </Link>
 
+                {/* Si VISTA muestro el boton detalles .. si la vista es solo del park seleccionado oculto el boton */}
+                {!vista ? (
                   <Button
                     variant="ghost"
                     colorScheme="blue"
@@ -137,8 +131,40 @@ const List = () => {
                   >
                     Details
                   </Button>
-                </ButtonGroup>
-              </CardFooter>
+                ) : (
+                  ""
+                )}
+
+                <Stack mt="6" spacing="3">
+                  <Heading size="md">Park reservation</Heading>
+                  <div>
+                    <li>Provincia :{park.provincia}</li>
+                    <li>ciudad : {park.ciudad}</li>
+                    <li>ubicacion : {park.ubicacion}</li>
+                  </div>
+
+                  <Text color="blue.600" fontSize="2xl">
+                    $450
+                  </Text>
+                </Stack>
+              </CardBody>
+
+              {vista ? (
+                <Stack spacing={4} direction="row" align="center">
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    size="md"
+                    onClick={() => handleDetail(park)}
+                  >
+                    Back
+                  </Button>
+                </Stack>
+              ) : (
+                ""
+              )}
+
+              <Divider />
             </Card>
           );
         })}

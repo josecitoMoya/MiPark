@@ -12,6 +12,7 @@ import { addUser } from "../redux/user";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+
   const { firstName } = useSelector((state) => state.user);
 
   return (
@@ -96,6 +97,7 @@ const Sidebar = () => {
         </Accordion>
       </Box>
     </div>
+
   );
 };
 
