@@ -1,16 +1,15 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { Route, Routes } from "react-router";
 import List from "./components/List";
-import Reserva from "./components/Reserva";
 import axios from "axios";
 import { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
+import Anfitrion from "./components/Anfitrion";
 
 function App() {
   //Persistencia
@@ -37,7 +36,7 @@ function App() {
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/reservation" element={<Reserva />} />
+          <Route path="/anfitrion" element={<Anfitrion />} />
         </Routes>
       </div>
     </div>

@@ -92,7 +92,6 @@ const List = () => {
 
   return (
     <div>
-      <h1>Soy un List</h1>
       <Wrap>
         {lista.map((park) => {
           return (
