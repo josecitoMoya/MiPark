@@ -1,3 +1,4 @@
+const Parkings = require("../models/Parkings");
 const Cart = require("../models/Carts");
 
 class CartController {
@@ -5,10 +6,12 @@ class CartController {
   
   static async allCart(req,res) {
     try {
-      const userid = req.params.id ;
+      const userid = req.params.userId.slice(1) ;
+      console.log(userid)
       const cart = await Cart.findAll({where: {
         clientId : userid
-      },include :[ {model: Parkings , required: true}] })
+      }, include :{ model: Parkings ,association: 'parking',foreignKey: 'parkingId' }})
+      console.log()
       res.status(200).send({message: "The cart was founded" , data : cart})
     } catch (error) {
       res.status(500).send("Error al encontrar el carrito")
@@ -17,7 +20,6 @@ class CartController {
   
   static async addCart(req, res) {
     try {
-      console.log(req.body)
       const data = await Cart.create(req.body);
       res.status(200).send({ message: "Added to Cart", data: data });
     } catch (error) {
@@ -28,7 +30,7 @@ class CartController {
 
   static async removeCart(req, res) {
     try {
-      const id = req.params.id;
+      const id = req.params.id.slice(1);
       const cart = await Cart.findByPk(id);
       await cart.destroy();
       res.status(200).send({ message: "Removed from cart" });
@@ -38,17 +40,16 @@ class CartController {
   }
 
   static async editCart(req, res) {
-    //EJEMPLO de axios => axios.put("http://localhost:8080/api/cart/editcart:1?value=add") si queres agregar 1 hora , "value=del" si queres remover 1 hora
+    //EJEMPLO de axios => axios.put("http://localhost:8080/api/cart/editcart:1") si queres agregar 1 hora , "value=del" si queres remover 1 hora
     try {
-      const value = req.query.value;
-      const id = req.params.id;
+      const hoursMod = req.body.hours
+      console.log(hoursMod)
+      const id = req.params.id.slice(1);
+      console.log(id)
       const cart = await Cart.findByPk(id);
-      if (query == "add") {
-        cart.hours++;
-      } else {
-        cart.hours--;
-      }
-      res.status(200).send({ message: "Added 1 hours" });
+      console.log(cart.hours)
+      cart.update({hours:hoursMod});
+      res.status(200).send({ message: "Cart modificate" });
     } catch (error) {
       res.status(500).send({ message: "Error server editing the hours" });
     }
