@@ -7,11 +7,10 @@ import List from "./components/List";
 import Reserva from "./components/Reserva";
 import axios from "axios";
 import { useEffect } from "react";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/Sidebar"
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
-
 function App() {
   //Persistencia
   const dispatch = useDispatch();
