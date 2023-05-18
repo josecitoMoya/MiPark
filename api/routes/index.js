@@ -3,12 +3,12 @@ const router = express.Router();
 
 //ROUTES
 const user = require("./user");
-const parkings = require("./parkings")
-const cart = require("./cart")
+const parkings = require("./parkings");
+const reserves = require("./reserves");
 
 //Middlewares
 router.use("/user", user);
 router.use("/parkings", parkings);
-router.use("/cart",cart);
+router.use("/reserves", reserves);
 
 module.exports = router;
