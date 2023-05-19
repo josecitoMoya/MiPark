@@ -1,39 +1,42 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { Route, Routes } from "react-router";
 import List from "./components/List";
-import Reserva from "./components/Reserva";
 import axios from "axios";
 import { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
+import { useDispatch } from "react-redux";
+import { addUser } from "./redux/user";
+import Navbar2 from "./components/Navbar2";
+import Anfitrion from "./components/Anfitrion";
 
 function App() {
-  //persistencia;
-
-  /*Linea de Jose 
-   const user = useContext(AuthContext); */
-
+  //Persistencia
+  const dispatch = useDispatch();
   useEffect(() => {
-    /*  liena de Jose
-     console.log("SOY LO QUYE VOY A MANDAR DESDE APP DEL FRONT", user); */
-
     axios
-      .get("http://localhost:8080/api/user/persist")
-      .catch((error) => console.log(error));
+      .get("http://localhost:8080/api/user/me", { withCredentials: true })
+      .then((res) => dispatch(addUser(res.data.data)))
+      .catch((err) => console.log(err));
   }, []);
+  //Fin de persisntencia
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar2 />
+      <br />
       <Sidebar />
+      <br />
+      <br />
+      <br />
+      <br />
       <div style={{ marginLeft: "15%" }}>
         <Routes>
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/reservation" element={<Reserva />} />
+          <Route path="/anfitrion" element={<Anfitrion />} />
         </Routes>
       </div>
     </div>

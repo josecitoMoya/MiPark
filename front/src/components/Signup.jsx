@@ -3,6 +3,8 @@ import axios from "axios";
 import useInput from "../hooks/useInput";
 import { Link, useNavigate } from "react-router-dom";
 import { Input, Button, Text, Box, Center } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/user";
 
 const Signup = () => {
   const firstName = useInput();
@@ -10,6 +12,7 @@ const Signup = () => {
   const email = useInput();
   const password = useInput();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const clickHandler = (e) => {
@@ -21,7 +24,7 @@ const Signup = () => {
       password: password.value,
     };
 
-    console.log("SOY LO QUE MANDO DESDE EL FRONT PARA EL REGISTRO", newUser);
+    // dispatch(addUser(newUser));
 
     axios
       .post("http://localhost:8080/api/user/register", newUser)
