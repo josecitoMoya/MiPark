@@ -41,7 +41,9 @@ function App() {
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+
           <Route path={`/reservation/:id`} element={<Reserva />} />
+
           <Route path={`/park/:id`} element={<Park />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

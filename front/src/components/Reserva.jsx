@@ -18,8 +18,8 @@ import { Link, useLocation, useParams } from "react-router-dom";
 
 const Reserva = () => {
   const reserva = useSelector((state) => state.reserva);
-  console.log("naranaja ", reserva[0]);
 
+  console.log("naranaja ", reserva);
   const itemHora = [];
 
   const handleHora = (e) => {
