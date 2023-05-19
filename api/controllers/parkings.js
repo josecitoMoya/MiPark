@@ -1,6 +1,5 @@
 const models = require("../models/index.js");
 const Parkings = require("../models/Parkings.js");
-const Hours = require("../models/Hours.js");
 
 class ParkingController {
   //ADMIN-PARKINGS ROUTES CONTROLLER
