@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Center,
@@ -7,43 +7,78 @@ import {
   Button,
   Checkbox,
   Text,
-  Card,
+  Select,
   Wrap,
 } from "@chakra-ui/react";
-import useInput from "../hooks/useInput";
 import axios from "axios";
 import Cards from "../commons/card";
 import { Link } from "react-router-dom";
 
 const Content = () => {
-  const provincia = useInput();
-  const ciudad = useInput();
-  const vehicleType = useInput();
-  const [checked, setChecked] = useState(false);
-  const [searched, setSearched] = useState([]);
+  const [provinces, setProvinces] = useState([]); //pido todas las provincias con cocheras.
+  const [provinceSelected, setProvinceSelected] = useState("");
+  const [city, setCity] = useState([]); //pido todas las ciudades de la provincia seleccionada que tengas cocheras.
+  const [roofChecked, setRoofChecked] = useState(false); // Soy el checkbox de roof
+  const [truckChecked, setTruckChecked] = useState(false); // Soy el checkbox de van_able
+  const [filtered, setFiltered] = useState([]); // recibo las cocheras dsp de los filtros
 
-  const handlerCochera = (e) => {
-    e.preventDefault();
-    const logPark = {
-      ciudad: ciudad.value,
-      provincia: provincia.value,
-      vehicleType: checked,
-    };
-
+  useEffect(() => {
     axios
       .get("http://localhost:8080/api/parkings/search/allparkings")
       .then((res) => res.data.data)
       .then((res) => {
-        setSearched(res);
-      });
+        console.log("ESTO ES LO QUE LLEGA A PRVINCES", res);
+        setProvinces(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleProvince = (e) => {
+    e.preventDefault();
+    const provinceSelected1 = e.target.value;
+    if (!provinceSelected1) return alert("Por favor selecciona una provincia");
+    setProvinceSelected(provinceSelected1);
+
+    axios
+      .get(
+        `http://localhost:8080/api/parkings/search/province/${provinceSelected1}`
+      )
+      .then((res) => setCity(res.data.data))
+      .catch((err) => console.log(err));
   };
 
-  console.log("SOY SEARCHED", searched);
-
-  const handleCheckbox = (e) => {
+  const handleCity = (e) => {
     e.preventDefault();
-    setChecked(e.target.checked);
-    console.log("SOY EL CHECKBOX", e.target.checked);
+    const citySelected = e.target.value;
+    if (!citySelected) return alert("Por favor elegi una ciudad.");
+  };
+
+  const handleRoofCheckbox = (e) => {
+    e.preventDefault();
+    setRoofChecked(e.target.checked);
+  };
+
+  const handleTruckCheckbox = (e) => {
+    e.preventDefault();
+    setTruckChecked(e.target.checked);
+  };
+
+  const handlerSearch = (e) => {
+    e.preventDefault();
+    const logPark = {
+      city: city[0].city,
+      provinces: provinceSelected,
+      van_able: truckChecked,
+      roof: roofChecked,
+    };
+
+    axios
+      .get(
+        `http://localhost:8080/api/parkings/searching?province=${logPark.provinces}&city=${logPark.city}&roof=${logPark.roof}&van_able=${logPark.van_able}`
+      )
+      .then((res) => setFiltered(res.data.data))
+      .then(console.log(filtered))
+      .catch((err) => err);
   };
 
   return (
@@ -57,7 +92,7 @@ const Content = () => {
           overflow="hidden"
         >
           <Box p="6">
-            <Box display="flex" alignItems="center" justifycontent={"center"}>
+            <Box display="flex" alignItems="center" justifyContent={"center"}>
               <Box
                 color="black"
                 fontWeight="semibold"
@@ -72,23 +107,39 @@ const Content = () => {
                 <Text fontSize={"4xl"}>Busca tu cochera</Text>
                 <br />
                 <br />
-                <form onSubmit={handlerCochera}>
+                <form onSubmit={handlerSearch}>
                   <Box justifycontent={"space-between"}>
                     <Stack spacing={5}>
-                      <Input
-                        {...provincia}
-                        variant="outline"
+                      <Select
                         placeholder="¿En que provincia buscas estacionar?"
-                      />
-                      <Input
-                        {...ciudad}
-                        variant="outline"
-                        placeholder="Y, ¿en que ciudad?"
-                      />
+                        onClick={handleProvince}
+                      >
+                        {provinces.map((item, i) => (
+                          <option value={item.province} key={i}>
+                            {item.province}
+                          </option>
+                        ))}
+                      </Select>
                       <br />
-                      <Box>
-                        <Checkbox {...vehicleType} onChange={handleCheckbox}>
+                      <Select
+                        placeholder="Y, ¿en que ciudad?"
+                        onClick={handleCity}
+                      >
+                        {city.map((item, i) => (
+                          <option value={item.city} key={i}>
+                            {item.city}
+                          </option>
+                        ))}
+                      </Select>
+                      <br />
+                      <Box alignContent={"space-between"}>
+                        <Checkbox onChange={handleTruckCheckbox}>
                           Tenes una camioneta?
+                        </Checkbox>
+                        <br />
+                        <br />
+                        <Checkbox onChange={handleRoofCheckbox}>
+                          Buscas que sea techada?
                         </Checkbox>
                       </Box>
                       <br />
@@ -112,10 +163,10 @@ const Content = () => {
       <br />
       <br />
       <div>
-        {searched.length > 0 ? (
-          searched.map((item, i) => (
-            <div key={i}>
-              <Wrap key={i} maxWidth={"80%"}>
+        {filtered.length > 0 ? (
+          filtered.map((item, i) => (
+            <div>
+              <Wrap key={i} w={"70%"} p={4} ml={"12%"}>
                 <Link to={`/reservation/${item.id}`}>
                   <Cards data={item} />
                 </Link>

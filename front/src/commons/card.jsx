@@ -17,7 +17,7 @@ const Cards = ({ data }) => {
   return (
     <>
       <Card
-        direction={{ base: "column", sm: "row" }}
+        direction={{ base: "row", sm: "row" }}
         overflow="hidden"
         variant="outline"
       >
@@ -34,7 +34,7 @@ const Cards = ({ data }) => {
             {/* <Text color="blue.600" fontSize="2xl">
             {data.address}
           </Text> */}
-            <Text py="2">
+            <Text py="2" minW={"100%"}>
               Esta cochera queda en el barrio {data.zone},{" "}
               {data.van_able
                 ? "tiene capacidad para albergar camionetas."
