@@ -8,14 +8,13 @@ import {
   Heading,
   Text,
   Divider,
-  CardFooter,
-  ButtonGroup,
   Button,
 } from "@chakra-ui/react";
 
 import { Link, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addreserva } from "../redux/reserva";
+import Park from "./Park";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -28,48 +27,56 @@ const List = () => {
       provincia: "Salta",
       ciduad: "Salta",
       ubicacion: "Buenos Aires 1287",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 2,
       provincia: "Corrientes",
       ciduad: "Corrientes",
       ubicacion: "Roque Saenz Peña1287",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 3,
       provincia: "Buenos Aires",
       ciduad: "Mar del Plata",
       ubicacion: "Hipolito Irigoyen 350",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 4,
       provincia: "Entre Rios",
       ciduad: "Parana",
       ubicacion: "25 de Mayo 840",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 5,
       provincia: "Mendoza",
       ciduad: "Mendoza",
       ubicacion: "Buenos Aires 1287",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 6,
       provincia: "Buenos Aires",
       ciduad: "Mar del Plata",
       ubicacion: "Hipolito Irigoyen 350",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 7,
       provincia: "Entre Rios",
       ciduad: "Parana",
       ubicacion: "25 de Mayo 840",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
     {
       id: 8,
       provincia: "Mendoza",
       ciduad: "Mendoza",
       ubicacion: "Buenos Aires 1287",
+      imagen: "https://enciclopedia.net/anexo/Estacionamiento.jpg",
     },
   ];
 
@@ -85,16 +92,16 @@ const List = () => {
   };
 
   const handleReserva = (e) => {
-    const { id, provincia, ciduad, ubicacion } = e;
-    dispatch(addreserva({ id, provincia, ciduad, ubicacion }));
+    const { id, provincia, ciduad, ubicacion, imagen } = e;
+    dispatch(addreserva({ id, provincia, ciduad, ubicacion, imagen }));
   };
 
   const [lista, setLista] = useState(park);
   const [vista, SetVista] = useState(false);
 
   useEffect(() => {
-    console.log(lista);
-  }, [lista]);
+    dispatch(addreserva(park));
+  }, []);
 
   return (
     <div>
@@ -104,36 +111,33 @@ const List = () => {
             <Card maxW="md" key={park.id} bg="blue.100">
               <CardBody>
                 <Image
-                  onClick={() => handleDetail(park)}
-                  src="https://enciclopedia.net/anexo/Estacionamiento.jpg"
+                  onClick={() => handleReserva(park)}
+                  src={park.imagen}
                   alt="Green double couch with wooden legs"
                   borderRadius="lg"
-
-                  //  width={{ xl: 300 }}
                 />
                 <br />
-                <Link to="/reservation">
+
+                <Link to={`/reservation/${park.id}`}>
                   <Button
                     variant="solid"
                     colorScheme="blue"
-                    onClick={() => handleReserva(park)}
+
+                    //                onClick={() => handleReserva(park)}
                   >
                     Reserve now
                   </Button>
                 </Link>
 
-                {/* Si VISTA muestro el boton detalles .. si la vista es solo del park seleccionado oculto el boton */}
-                {!vista ? (
+                <Link to={`/park/${park.id}`}>
                   <Button
                     variant="ghost"
                     colorScheme="blue"
-                    onClick={() => handleDetail(park)}
+                    //          onClick={() => handleReserva(park)}
                   >
                     Details
                   </Button>
-                ) : (
-                  ""
-                )}
+                </Link>
 
                 <Stack mt="6" spacing="3">
                   <Heading size="md">Park reservation</Heading>

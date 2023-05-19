@@ -14,17 +14,22 @@ import {
   Square,
   Checkbox,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Reserva = () => {
   const reserva = useSelector((state) => state.reserva);
-  console.log("reserva", reserva);
+  console.log("naranaja ", reserva[0]);
+
   const itemHora = [];
+
+  const handleHora = (e) => {
+    console.log(e.target);
+  };
 
   for (let i = 1; i < 12; i++) {
     itemHora.push(
       <li key={i}>
-        <Checkbox key={i} id={{ reserva: reserva.id, hora: { i } }}>
+        <Checkbox key={i} id={i} onChange={handleHora}>
           Hora : {i}
         </Checkbox>
       </li>
@@ -41,7 +46,7 @@ const Reserva = () => {
         <Image
           objectFit="cover"
           maxW={{ base: "500%", sm: "500px" }}
-          src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+          src={reserva.imagen}
           alt="Caffe Latte"
         />
 
