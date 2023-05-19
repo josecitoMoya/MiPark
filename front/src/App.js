@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
 import Anfitrion from "./components/Anfitrion";
+import Content from "./components/Content";
 
 function App() {
   //Persistencia
@@ -31,12 +32,13 @@ function App() {
       <br />
       <br />
       <br />
-      <div style={{ marginLeft: "15%" }}>
+      <div style={{ marginLeft: "20%" }}>
         <Routes>
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/anfitrion" element={<Anfitrion />} />
+          <Route path="/huesped" element={<Content />} />
         </Routes>
       </div>
     </div>

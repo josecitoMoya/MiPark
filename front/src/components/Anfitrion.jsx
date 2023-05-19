@@ -1,47 +1,69 @@
 import React, { useState } from "react";
-import { Box, Center, Checkbox, Input, Stack, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Checkbox,
+  Input,
+  Stack,
+  Button,
+  Text,
+} from "@chakra-ui/react";
 import useInput from "../hooks/useInput";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const Anfitrion = () => {
   const address = useInput();
-  const barrio = useInput();
-  const ciudad = useInput();
-  const provincia = useInput();
+  const zone = useInput();
+  const city = useInput();
+  const province = useInput();
   const roof = useInput();
-  const coordinates = useInput();
-  const vehicleType = useInput();
-  const pricePerHour = useInput();
-  const [checked, setChecked] = useState(false);
+  const van_able = useInput();
+  const price_per_hour = useInput();
+  const [roofChecked, setRoofChecked] = useState(false);
+  const [truckChecked, setTruckChecked] = useState(false);
+  const from_hour = useInput();
+  const to_hour = useInput();
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handlerCochera = (e) => {
     e.preventDefault();
     const logPark = {
       address: address.value,
-      barrio: barrio.value,
-      ciudad: ciudad.value,
-      provincia: provincia.value,
-      roof: checked,
-      coordinates: coordinates.value,
-      vehicleType: vehicleType.value,
-      pricePerHour: pricePerHour.value,
+      zone: zone.value,
+      city: city.value,
+      province: province.value,
+      roof: roofChecked,
+      van_able: truckChecked,
+      price_per_hour: price_per_hour.value,
+      hablitada: false,
+      ownerId: user.id,
+      from_hour: from_hour.value,
+      to_hour: to_hour.value,
     };
 
     console.log("ESTA ES LA CARGA DE ANFITRION", logPark);
+    console.log("SOY USER DE ANFITRION", user);
 
     axios
-      .post("http://localhost:8080/api/parkings/crearparking", logPark, {
+      .post("http://localhost:8080/api/parkings/createparking", logPark, {
         withCredentials: true,
       })
-      .then((res) =>
-        console.log("SOY LA RTA DE BACK PARA LA CARGA DE PARKING", res)
-      )
+      .then(navigate("/"))
       .catch((err) => console.log(err));
   };
 
-  const handleCheckbox = (e) => {
+  const handleRoofCheckbox = (e) => {
     e.preventDefault();
-    setChecked(e.target.checked);
+    setRoofChecked(e.target.checked);
+    console.log("SOY EL CHECKBOX", e.target.checked);
+  };
+
+  const handleTruckCheckbox = (e) => {
+    e.preventDefault();
+    setTruckChecked(e.target.checked);
     console.log("SOY EL CHECKBOX", e.target.checked);
   };
 
@@ -56,7 +78,7 @@ const Anfitrion = () => {
           overflow="hidden"
         >
           <Box p="6">
-            <Box display="flex" alignItems="center" justifyContent={"center"}>
+            <Box display="flex" alignItems="center" justifycontent={"center"}>
               <Box
                 color="black"
                 fontWeight="semibold"
@@ -66,7 +88,9 @@ const Anfitrion = () => {
                 ml="2"
                 w={"80%"}
               >
-                <h1>Alta de cochera</h1>
+                <br />
+                <br />
+                <Text fontSize={"4xl"}>Alta de cochera</Text>
                 <br />
                 <br />
                 <form onSubmit={handlerCochera}>
@@ -75,38 +99,68 @@ const Anfitrion = () => {
                       {...address}
                       variant="outline"
                       placeholder="Domicilio"
+                      required
                     />
-                    <Input {...barrio} variant="outline" placeholder="Barrio" />
-                    <Input {...ciudad} variant="outline" placeholder="Ciudad" />
                     <Input
-                      {...provincia}
+                      {...zone}
+                      variant="outline"
+                      placeholder="Barrio"
+                      required
+                    />
+                    <Input
+                      {...city}
+                      variant="outline"
+                      placeholder="Ciudad"
+                      required
+                    />
+                    <Input
+                      {...province}
                       variant="outline"
                       placeholder="Provincia"
+                      required
                     />
                     <Input
-                      {...coordinates}
+                      {...from_hour}
                       variant="outline"
-                      placeholder="Coordenadas"
+                      type="number"
+                      placeholder="Desde que hora esta disponible"
+                      required
                     />
                     <Input
-                      {...vehicleType}
+                      {...to_hour}
                       variant="outline"
-                      placeholder="Tipo de vehiculo"
+                      type="number"
+                      placeholder="Hasta que hora esta disponible"
+                      required
                     />
                     <Input
-                      {...pricePerHour}
+                      {...price_per_hour}
                       variant="outline"
                       placeholder="Precio"
+                      type="number"
+                      required
                     />
+                    <br />
 
-                    <Box p={4} justifyContent={"space-between"}>
-                      <Checkbox {...roof} onChange={handleCheckbox}>
+                    <Box p={4} justifycontent={"left"}>
+                      <Checkbox {...roof} onChange={handleRoofCheckbox}>
                         Es techada?
                       </Checkbox>
+
+                      <br />
+                      <Checkbox {...van_able} onChange={handleTruckCheckbox}>
+                        Es apta para camionetas?
+                      </Checkbox>
                     </Box>
-                    <Button type="submit">Cargar cochera</Button>
+                    <br />
+                    <Button type="submit" colorScheme="blue">
+                      Cargar cochera
+                    </Button>
                   </Stack>
+                  <input type="hidden" value={user} />
                 </form>
+                <br />
+                <br />
               </Box>
             </Box>
           </Box>

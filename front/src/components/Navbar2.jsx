@@ -13,6 +13,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -61,7 +62,9 @@ const Navbar2 = () => {
         </Link>
         <Box>
           <Link to={"/"}>
-            <Heading>miPark</Heading>
+            <Text fontFamily={"serif"} fontSize={"7xl"}>
+              miPark
+            </Text>
           </Link>
         </Box>
         {firstName ? (
@@ -91,13 +94,13 @@ const Navbar2 = () => {
             <DrawerBody alignItems={"center"} p={10} w={"400px"}>
               {firstName ? (
                 <>
-                  <Button w={"190px"}> Carrito </Button>
+                  <Button w={"190px"}> Historial </Button>
                   <br />
                   <br />
                   <Button w={"190px"}> Reservas </Button>
                 </>
               ) : (
-                <div justifyContent="center">
+                <div justifycontent="center">
                   <Link to={"login"}>
                     <Button w={"190px"} onClick={onClose}>
                       Iniciar Sesion
@@ -115,7 +118,7 @@ const Navbar2 = () => {
               )}
             </DrawerBody>
 
-            <DrawerFooter justifyContent={"center"}>
+            <DrawerFooter justifycontent={"center"}>
               {firstName ? (
                 <Link to={"/logout"}>
                   <Button onClick={handleLogOut} w={"250px"}>
