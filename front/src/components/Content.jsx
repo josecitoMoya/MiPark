@@ -23,6 +23,11 @@ const Content = () => {
   const [filtered, setFiltered] = useState([]); // recibo las cocheras dsp de los filtros
 
   useEffect(() => {
+    const paraBuscar = {
+      city: city,
+      roof: false,
+      van_able: false,
+    };
     axios
       .get("http://localhost:8080/api/parkings/search/allparkings")
       .then((res) => res.data.data)

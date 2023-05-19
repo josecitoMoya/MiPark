@@ -11,6 +11,7 @@ import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
 import Anfitrion from "./components/Anfitrion";
 import Content from "./components/Content";
+import UserParks from "./components/User_parks";
 
 function App() {
   //Persistencia
@@ -39,6 +40,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/anfitrion" element={<Anfitrion />} />
           <Route path="/huesped" element={<Content />} />
+          <Route path="/user" element={<UserParks />} />
         </Routes>
       </div>
     </div>
