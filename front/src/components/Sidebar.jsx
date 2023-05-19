@@ -12,7 +12,6 @@ import { addUser } from "../redux/user";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-
   const { firstName } = useSelector((state) => state.user);
 
   return (
@@ -80,7 +79,7 @@ const Sidebar = () => {
               <br />
               <br />
               {firstName ? (
-                <Link to={"/buscar"}>
+                <Link to={"/huesped"}>
                   <Button w={"100%"} p={4}>
                     Quiero alquilar una cochera
                   </Button>
@@ -97,7 +96,6 @@ const Sidebar = () => {
         </Accordion>
       </Box>
     </div>
-
   );
 };
 

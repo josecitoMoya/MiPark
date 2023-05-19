@@ -1,10 +1,8 @@
 import React from "react";
 import axios from "axios";
 import useInput from "../hooks/useInput";
-import { Link, useNavigate } from "react-router-dom";
-import { Input, Button, Text, Box, Center } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { addUser } from "../redux/user";
+import { useNavigate } from "react-router-dom";
+import { Input, Button, Text, Box, Center, Stack } from "@chakra-ui/react";
 
 const Signup = () => {
   const firstName = useInput();
@@ -12,7 +10,6 @@ const Signup = () => {
   const email = useInput();
   const password = useInput();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const clickHandler = (e) => {
@@ -24,76 +21,85 @@ const Signup = () => {
       password: password.value,
     };
 
-    // dispatch(addUser(newUser));
-
     axios
       .post("http://localhost:8080/api/user/register", newUser)
-      .then(navigate("/"))
+      .then(navigate("/login"))
       .catch((err) => console.error(err));
   };
 
   return (
-    <div>
-      <Center>
+    <>
+      <Center h="75%" color="white" marginTop={"5%"}>
         <Box
-          marginTop={200}
-          maxW="2xl"
+          w={"75%"}
+          maxW="50%"
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
         >
-          <br />
-          <Text fontSize="6xl">Registrarse</Text>
-          <br />
-          <br />
-          <form onSubmit={clickHandler}>
-            <Input
-              {...firstName}
-              htmlSize={50}
-              type="text"
-              width="auto"
-              placeholder="Nombre"
-              required
-            />
-            <br />
-            <br />
-            <Input
-              {...lastName}
-              htmlSize={50}
-              type="text"
-              width="auto"
-              placeholder="Apellido"
-              required
-            />
-            <br />
-            <br />
-            <Input
-              {...email}
-              htmlSize={50}
-              type="text"
-              width="auto"
-              placeholder="email"
-              required
-            />
-            <br />
-            <br />
-            <Input
-              {...password}
-              htmlSize={50}
-              type="password"
-              width="auto"
-              placeholder="Contraseña"
-              required
-            />
-            <br />
-            <br />
-            <Button colorScheme="blue" type="submit">
-              Enviar
-            </Button>
-          </form>
+          <Box p="6">
+            <Box display="flex" alignItems="center" justifycontent={"center"}>
+              <Box
+                color="black"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                fontSize="2xl"
+                textTransform="uppercase"
+                ml="2"
+                w={"80%"}
+              >
+                <br />
+                <Text fontSize="4xl">Registrarse</Text>
+                <br />
+
+                <form onSubmit={clickHandler}>
+                  <Stack spacing={5}>
+                    <Input {...firstName} placeholder="Nombre" required />
+
+                    <br />
+                    <Input
+                      {...lastName}
+                      htmlSize={50}
+                      type="text"
+                      width="auto"
+                      placeholder="Apellido"
+                      required
+                    />
+                    <br />
+
+                    <Input
+                      {...email}
+                      htmlSize={50}
+                      type="email"
+                      width="auto"
+                      placeholder="email"
+                      required
+                    />
+                    <br />
+
+                    <Input
+                      {...password}
+                      htmlSize={50}
+                      type="password"
+                      width="auto"
+                      placeholder="Contraseña"
+                      required
+                    />
+                    <br />
+                    <br />
+                    <Button colorScheme="blue" type="submit">
+                      Enviar
+                    </Button>
+                    <br />
+                    <br />
+                  </Stack>
+                </form>
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Center>
-    </div>
+    </>
   );
 };
 
