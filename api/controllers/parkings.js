@@ -2,42 +2,6 @@ const models = require("../models/index.js");
 const Parkings = require("../models/Parkings.js");
 
 class ParkingController {
-  //ADMIN-PARKINGS ROUTES CONTROLLER
-  static async getPendingParkings(req, res) {
-    const parks = await Parkings.findAll({ where: { authorized: false } });
-    if (parks.length > 0) {
-      return res.status(200).send({
-        message: "Parkings with pending authorization requests are sent",
-        data: parks,
-      });
-    }
-    return res.status(204).send({
-      message: "There are no parkings with pending authorization requests",
-    });
-  }
-
-  static async authorizeParking(req, res) {
-    const parking = await Parkings.findOne({
-      where: { id: req.body.id },
-    });
-    await parking.update({ authorized: true });
-    res.status(200).send({
-      message: "Parking was successfully authorized",
-      data: parking,
-    });
-  }
-
-  static async deleteParking(req, res) {
-    const parking = await Parkings.findOne({
-      where: { id: req.body.id },
-    });
-    await parking.destroy();
-    res.status(200).send({
-      message: "Parking was successfully deleted",
-    });
-  }
-
-  //USER-PARKINGS ROUTES CONTROLLER
   static async getAllParkings(req, res) {
     const parks = await Parkings.findAll({ where: { authorized: true } });
     if (parks.length > 0) {
