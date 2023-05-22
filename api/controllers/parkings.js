@@ -44,6 +44,9 @@ class ParkingController {
     if (req.query.van_able) {
       request.van_able = req.query.van_able;
     }
+    if (req.query.id) {
+      request.ownerId = req.query.id;
+    }
     const parkings = await Parkings.findAll({
       where: request,
     });
@@ -74,9 +77,14 @@ class ParkingController {
     const parking = await Parkings.findOne({
       where: { id: req.body.id },
     });
-    await parking.update({ dropped: true });
+    if (parking.dropped) {
+      await parking.update({ dropped: false });
+    } else {
+      await parking.update({ dropped: true });
+    }
     res.status(200).send({
-      message: "Parking was successfully deleted",
+      message: "Parking was successfully modifiqued",
+      data: parking,
     });
   }
 }

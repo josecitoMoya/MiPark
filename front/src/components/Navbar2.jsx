@@ -27,9 +27,9 @@ const Navbar2 = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-
-  const { id, firstName, lastName, email, admin } = useSelector((state) => state.user);
-
+  const { id, firstName, lastName, email, admin } = useSelector(
+    (state) => state.user
+  );
 
   const handleLogOut = (e) => {
     e.preventDefault(e);
@@ -101,17 +101,17 @@ const Navbar2 = () => {
                   </Button>
                   <br />
                   <br />
-                  <Button w={"250px"} onClick={onClose}>
-                    Mis reservas
-                  </Button>
+                  <Link to={"/user"}>
+                    <Button w={"250px"} onClick={onClose}>
+                      Mis cocheras
+                    </Button>
+                  </Link>
                   <br />
                   <br />
-
-
-
                   <Link to={`/reserves/${firstName}-${lastName}/${id}`}>
-                    <Button w={"190px"}> Reservas </Button>
-
+                    <Button w={"250px"} onClick={onClose}>
+                      Reservas
+                    </Button>
                   </Link>
                 </>
               ) : (

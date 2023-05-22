@@ -30,13 +30,19 @@ const Sidebar = () => {
         boxShadow={"2xl"}
       >
         {admin ? (
-          <Stack w={"100%"}>
-            <Button>Usuarios</Button>
-            <Link to={"/admin-cocheras"}>
-              <Button>Cocheras</Button>
+          <Stack>
+            <Link>
+              <Button w={"100%"}>Usuarios</Button>
             </Link>
-            <Button>Reservas</Button>
-            <Button>Transacciones</Button>
+            <Link to={"/admin-cocheras"}>
+              <Button w={"100%"}>Cocheras</Button>
+            </Link>
+            <Link>
+              <Button w={"100%"}>Reservas</Button>
+            </Link>
+            <Link>
+              <Button w={"100%"}>Transacciones</Button>
+            </Link>
           </Stack>
         ) : (
           <Accordion allowMultiple>

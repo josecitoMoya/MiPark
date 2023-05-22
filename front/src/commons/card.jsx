@@ -12,8 +12,26 @@ import {
   Heading,
   Center,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Cards = ({ data, path }) => {
+  const [parkinStatus, setParkinStatus] = useState(data);
+  const { id } = useSelector((state) => state.user);
+
+  useEffect(() => {});
+
+  const handleDelete = (e) => {
+    const id = {
+      id: data.id,
+    };
+    axios
+      .put("http://localhost:8080/api/parkings/drop-parking", id)
+      .then((res) => res.data.data)
+      .then((res) => setParkinStatus(res.dropped));
+  };
+
   return (
     <>
       <Card
@@ -53,13 +71,23 @@ const Cards = ({ data, path }) => {
           <Center alignItems={"center"}>
             {path ? (
               <Stack spacing={2}>
-                <Button variant="solid" colorScheme="blue">
-                  Estado de cochera
-                </Button>
-                <br />
-                <Button variant="solid" colorScheme="red">
-                  Eliminar cochera
-                </Button>
+                {parkinStatus == false ? (
+                  <Button
+                    variant="solid"
+                    colorScheme="green"
+                    onClick={handleDelete}
+                  >
+                    Activar cochera
+                  </Button>
+                ) : (
+                  <Button
+                    variant="solid"
+                    colorScheme="red"
+                    onClick={handleDelete}
+                  >
+                    Desactivar cochera
+                  </Button>
+                )}
               </Stack>
             ) : (
               <Button variant="solid" colorScheme="blue">

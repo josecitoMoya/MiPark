@@ -13,13 +13,11 @@ const UserParks = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // console.log("SOY USER DEL USER GUILLADO", user);
     axios
-      .get(`http://localhost:8080/api/parkings/search/?email=${user.id}`)
+      .get(`http://localhost:8080/api/parkings/search/?id=${user.id}`)
       .then((res) => res.data.data)
       .then((res) => setParks(res))
       .then(setPath(true))
-      .then(console.log("SOY EL PATH DENTRO DE USER PARKS", path))
       .catch((err) => console.log(err));
   }, []);
 
@@ -27,9 +25,7 @@ const UserParks = () => {
     <div>
       {parks?.map((item, i) => (
         <Wrap key={i} w={"70%"} p={4} ml={"12%"}>
-          <Link to={`/reservation/${item.id}`}>
-            <Cards data={item} path={path} />
-          </Link>
+          <Cards data={item} path={path} />
         </Wrap>
       ))}
     </div>
