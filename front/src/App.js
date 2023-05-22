@@ -12,6 +12,7 @@ import Navbar2 from "./components/Navbar2";
 import Anfitrion from "./components/Anfitrion";
 import Content from "./components/Content";
 import UserParks from "./components/User_parks";
+import Admin from "./components/Admin";
 
 function App() {
   //Persistencia
@@ -20,6 +21,7 @@ function App() {
     axios
       .get("http://localhost:8080/api/user/me", { withCredentials: true })
       .then((res) => dispatch(addUser(res.data.data)))
+      .then((res) => console.log("SOY LO QUE RECIBO PARA LA PERSISTENCIA", res))
       .catch((err) => console.log(err));
   }, []);
   //Fin de persisntencia
@@ -27,13 +29,9 @@ function App() {
   return (
     <div className="App">
       <Navbar2 />
-      <br />
       <Sidebar />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div style={{ marginLeft: "20%" }}>
+
+      <div style={{ marginLeft: "20%", marginTop: "130px" }}>
         <Routes>
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
@@ -41,6 +39,7 @@ function App() {
           <Route path="/anfitrion" element={<Anfitrion />} />
           <Route path="/huesped" element={<Content />} />
           <Route path="/user" element={<UserParks />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </div>

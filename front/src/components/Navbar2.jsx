@@ -27,7 +27,7 @@ const Navbar2 = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const { firstName, lastName, email } = useSelector((state) => state.user);
+  const { firstName, admin } = useSelector((state) => state.user);
 
   const handleLogOut = (e) => {
     e.preventDefault(e);
@@ -54,7 +54,7 @@ const Navbar2 = () => {
       >
         <Link to="/">
           <Image
-            marginLeft={"75px"}
+            marginLeft={"150px"}
             borderRadius="full"
             boxSize="90px"
             src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
@@ -94,15 +94,26 @@ const Navbar2 = () => {
             <DrawerBody alignItems={"center"} p={10} w={"400px"}>
               {firstName ? (
                 <>
-                  <Button w={"190px"}> Historial </Button>
+                  <Button w={"250px"} onClick={onClose}>
+                    Mi historial
+                  </Button>
                   <br />
                   <br />
-                  <Button w={"190px"}> Reservas </Button>
+                  <Button w={"250px"} onClick={onClose}>
+                    Mis reservas
+                  </Button>
+                  <br />
+                  <br />
+                  <Link to={"/user"}>
+                    <Button w={"250px"} onClick={onClose}>
+                      Mis cocheras
+                    </Button>
+                  </Link>
                 </>
               ) : (
-                <div justifycontent="center">
+                <>
                   <Link to={"login"}>
-                    <Button w={"190px"} onClick={onClose}>
+                    <Button w={"250px"} onClick={onClose}>
                       Iniciar Sesion
                     </Button>
                   </Link>
@@ -110,15 +121,15 @@ const Navbar2 = () => {
 
                   <br />
                   <Link to={"/signup"}>
-                    <Button w={"190px"} onClick={onClose}>
+                    <Button w={"250px"} onClick={onClose}>
                       Registrarse
                     </Button>
                   </Link>
-                </div>
+                </>
               )}
             </DrawerBody>
 
-            <DrawerFooter justifycontent={"center"}>
+            <DrawerFooter alignItems={"center"}>
               {firstName ? (
                 <Link to={"/logout"}>
                   <Button onClick={handleLogOut} w={"250px"}>
@@ -126,7 +137,7 @@ const Navbar2 = () => {
                   </Button>
                 </Link>
               ) : (
-                <h1>.</h1>
+                <></>
               )}
             </DrawerFooter>
           </DrawerContent>
