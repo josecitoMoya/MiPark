@@ -41,10 +41,17 @@ Parkings.init(
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
+    image: {
+      type: Sequelize.STRING,
+    },
     authorized: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
-    }
+    },
+    dropped: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { sequelize: db, modelName: "parkings" }
 );

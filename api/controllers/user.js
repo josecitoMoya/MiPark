@@ -57,6 +57,7 @@ class UserController {
           lastName: user.lastName,
           email: user.email,
           admin: user.admin,
+          id: user.id,
         };
         return res
           .status(200)
