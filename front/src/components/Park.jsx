@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import axios, { Axios } from "axios";
 import { MdCheckCircle, MdSettings } from "react-icons/md";
 import {
   Card,
@@ -20,14 +19,12 @@ import {
   Center,
   Flex,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
 
-const Reserva = () => {
+const Park = () => {
   const id = useParams().id;
   const [park, setPark] = useState({});
   const [hour_f, setHour_f] = useState();
   const [hour_to, setHour_to] = useState();
-  const user = useSelector((state) => state.user);
   const listHour = [];
   let hours = [];
 
@@ -45,6 +42,9 @@ const Reserva = () => {
   useEffect(() => {
     getParks();
   }, []);
+
+  console.log(hour_f);
+  console.log(hour_to);
 
   const handleHour = (e) => {
     if (e.target.checked === true) {
@@ -66,19 +66,6 @@ const Reserva = () => {
       </Checkbox>
     );
   }
-
-  const handleAddCarrito = () => {
-    const date = new Date().toLocaleDateString();
-
-    const newReserve = {
-      date: date,
-      hour: hours,
-      price: park.price_per_hour,
-      parkingId: park.id,
-      clientId: user.id,
-    };
-    console.log(newReserve);
-  };
 
   return (
     <div>
@@ -135,20 +122,17 @@ const Reserva = () => {
 
               <CardBody w="200px">
                 <Stack spacing={1} direction="column">
-                  {listHour}
+                  <p>
+                    Nuestro Park esta ubicado en zona centro y cuenta con
+                    vigilancia las 24hs del dia{" "}
+                  </p>
                 </Stack>
               </CardBody>
             </Center>
           </Flex>
 
           <CardFooter>
-            {user.id ? (
-              <Button colorScheme="orange" onClick={handleAddCarrito}>
-                Pagar
-              </Button>
-            ) : (
-              ""
-            )}
+            <Button colorScheme="orange">Agregar a Carrito</Button>
           </CardFooter>
         </Stack>
       </Card>
@@ -164,4 +148,4 @@ const Reserva = () => {
   );
 };
 
-export default Reserva;
+export default Park;

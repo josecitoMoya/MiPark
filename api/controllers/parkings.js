@@ -2,42 +2,6 @@ const models = require("../models/index.js");
 const Parkings = require("../models/Parkings.js");
 
 class ParkingController {
-  //ADMIN-PARKINGS ROUTES CONTROLLER
-  static async getPendingParkings(req, res) {
-    const parks = await Parkings.findAll({ where: { authorized: false } });
-    if (parks.length > 0) {
-      return res.status(200).send({
-        message: "Parkings with pending authorization requests are sent",
-        data: parks,
-      });
-    }
-    return res.status(204).send({
-      message: "There are no parkings with pending authorization requests",
-    });
-  }
-
-  static async authorizeParking(req, res) {
-    const parking = await Parkings.findOne({
-      where: { id: req.body.id },
-    });
-    await parking.update({ authorized: true });
-    res.status(200).send({
-      message: "Parking was successfully authorized",
-      data: parking,
-    });
-  }
-
-  static async deleteParking(req, res) {
-    const parking = await Parkings.findOne({
-      where: { id: req.body.id },
-    });
-    await parking.destroy();
-    res.status(200).send({
-      message: "Parking was successfully deleted",
-    });
-  }
-
-  //USER-PARKINGS ROUTES CONTROLLER
   static async getAllParkings(req, res) {
     const parks = await Parkings.findAll({ where: { authorized: true } });
     if (parks.length > 0) {
@@ -61,56 +25,34 @@ class ParkingController {
       .send({ message: "Requested parking is sent", data: parking });
   }
 
-  static async getParkingsByZone(req, res) {
+  //RUTA PARA GET DEL FRONT:
+  //http://localhost:8080/api/parkings/search/?province=X&city=X&zone=X&roof=X&van_able=X
+  static async getParkingsByCategories(req, res) {
+    let request = {};
+    if (req.query.province) {
+      request.province = req.query.province;
+    }
+    if (req.query.city) {
+      request.city = req.query.city;
+    }
+    if (req.query.zone) {
+      request.zone = req.query.zone;
+    }
+    if (req.query.roof) {
+      request.roof = req.query.roof;
+    }
+    if (req.query.van_able) {
+      request.van_able = req.query.van_able;
+    }
     const parkings = await Parkings.findAll({
-      where: {
-        zone: req.params.name,
-        roof: req.params.roof,
-        van_able: req.params.van_able,
-      },
+      where: request,
     });
-    if (!parkings)
-      return res.status(204).send({
-        message: "There are no authorized parkings in the requested zone.",
+    if (parkings.length === 0)
+      return res.status(200).send({
+        message: "There are no authorized parkings by the selected parameters.",
       });
     res.status(200).send({
-      message: "Search result is sent",
-      data: parkings,
-    });
-  }
-
-  static async getParkingsByCity(req, res) {
-    const parkings = await Parkings.findAll({
-      where: {
-        city: req.params.name,
-        roof: req.params.roof,
-        van_able: req.params.van_able,
-      },
-    });
-    if (!parkings)
-      return res.status(204).send({
-        message: "There are no authorized parkings in the requested city.",
-      });
-    res.status(200).send({
-      message: "Se envía el resultado de la búsqueda",
-      data: parkings,
-    });
-  }
-
-  static async getParkingsByProvince(req, res) {
-    const parkings = await Parkings.findAll({
-      where: {
-        province: req.params.name,
-        roof: req.params.roof,
-        van_able: req.params.van_able,
-      },
-    });
-    if (!parkings)
-      return res.status(204).send({
-        message: "There are no authorized parkings in the requested province.",
-      });
-    res.status(200).send({
-      message: "Se envía el resultado de la búsqueda",
+      message: "Parkings are sent.",
       data: parkings,
     });
   }

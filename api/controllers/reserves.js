@@ -30,7 +30,7 @@ class ReservesController {
       const data = await Reserves.create(req.body);
       return res.status(201).send({ message: "Added reserve", data });
     } catch (error) {
-      return res.status(500).send({ message: "Error adding reserve" });
+      return res.status(500).send({ message: "Error adding reserve jsjsjs" });
     }
   }
 

@@ -6,12 +6,16 @@ import List from "./components/List";
 import axios from "axios";
 import { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
+import Park from "./components/Park";
+import NotFound from "./components/NotFound";
 import Anfitrion from "./components/Anfitrion";
 import Content from "./components/Content";
 import UserReserves from "./components/UserReserves";
+import Reserva from "./components/Reserva";
+import UserParks from "./components/User_parks";
 
 function App() {
   //Persistencia
@@ -27,6 +31,8 @@ function App() {
   }, []);
   //Fin de persisntencia
 
+  const park = useSelector((state) => state.reserva);
+
   return (
     <div className="App">
       <Navbar2 />
@@ -41,9 +47,13 @@ function App() {
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path={`/reservation/:id`} element={<Reserva />} />
+          <Route path={`/park/:id`} element={<Park />} />
           <Route path="/anfitrion" element={<Anfitrion />} />
           <Route path="/huesped" element={<Content />} />
           <Route path="/reserves/:username/:id" element={<UserReserves />} />
+          <Route path="/user" element={<UserParks />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
