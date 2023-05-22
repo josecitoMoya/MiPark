@@ -30,13 +30,10 @@ const Login = () => {
       .then((res) => res.data.data)
       .then((res) => {
         if (res.admin == true) {
-          console.log("SOY LO QUE LLEGA POR RES", res);
           dispatch(addUser(res));
-          console.log("ENTRO EN TRUE", user);
           navigate("/admin");
         } else {
           dispatch(addUser(res));
-          console.log("ENTRO EN FALSE", user);
           navigate("/");
         }
       })
