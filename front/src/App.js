@@ -1,10 +1,8 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { Route, Routes } from "react-router";
 import List from "./components/List";
-import Reserva from "./components/Reserva";
 import axios from "axios";
 import { useEffect } from "react";
 import Sidebar from "./components/Sidebar";
@@ -13,6 +11,9 @@ import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
 import Park from "./components/Park";
 import NotFound from "./components/NotFound";
+import Anfitrion from "./components/Anfitrion";
+import Content from "./components/Content";
+import Reserva from "./components/Reserva";
 
 function App() {
   //Persistencia
@@ -36,15 +37,15 @@ function App() {
       <br />
       <br />
       <br />
-      <div style={{ marginLeft: "15%" }}>
+      <div style={{ marginLeft: "20%" }}>
         <Routes>
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-
           <Route path={`/reservation/:id`} element={<Reserva />} />
-
           <Route path={`/park/:id`} element={<Park />} />
+          <Route path="/anfitrion" element={<Anfitrion />} />
+          <Route path="/huesped" element={<Content />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

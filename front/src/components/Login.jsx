@@ -11,7 +11,6 @@ const Login = () => {
   const navigate = useNavigate();
   const email = useInput();
   const password = useInput();
-  // const user = useContext(AuthContext);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -38,48 +37,69 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <Center>
+    <>
+      <Center h="75%" color="white" marginTop={"5%"}>
         <Box
-          marginTop={200}
-          maxW="2xl"
+          w={"75%"}
+          maxW="50%"
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
         >
-          <br />
-          <Text fontSize="6xl">Iniciar Sesion</Text>
-          <br />
-          <br />
-          <form onSubmit={handleSubmit}>
-            <Input
-              {...email}
-              type="text"
-              htmlSize={50}
-              width="auto"
-              placeholder="email"
-              required
-            />
-            <br />
-            <br />
+          <Box p="6">
+            <Box display="flex" alignItems="center" justifycontent={"center"}>
+              <Box
+                color="black"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                fontSize="2xl"
+                textTransform="uppercase"
+                ml="2"
+                w={"80%"}
+              >
+                <br />
+                <Text fontSize="4xl">Iniciar Sesion</Text>
+                <br />
+                <br />
+                <form onSubmit={handleSubmit}>
+                  <Input
+                    {...email}
+                    type="text"
+                    htmlSize={50}
+                    width="auto"
+                    placeholder="email"
+                    required
+                  />
+                  <br />
+                  <br />
 
-            <Input
-              {...password}
-              htmlSize={50}
-              width="auto"
-              type="password"
-              placeholder="Contraseña"
-              required
-            />
-            <br />
-            <br />
-            <Button colorScheme="blue" type="submit">
-              Enviar
-            </Button>
-          </form>
+                  <Input
+                    {...password}
+                    htmlSize={50}
+                    width="auto"
+                    type="password"
+                    placeholder="Contraseña"
+                    required
+                  />
+                  <br />
+                  <br />
+                  {/* <Link to="/signup">
+                    <h6> No tengo cuenta en miPark </h6>
+                  </Link> */}
+                  <br />
+                  <br />
+                  <Button colorScheme="blue" type="submit">
+                    Iniciar Sesion
+                  </Button>
+                </form>
+                <br />
+                <br />
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Center>
-    </div>
+    </>
   );
 };
 

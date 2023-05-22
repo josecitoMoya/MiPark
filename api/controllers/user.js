@@ -28,6 +28,7 @@ class UserController {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
+        id: req.body.id,
       };
       const token = Token.generateToken(payload);
       res

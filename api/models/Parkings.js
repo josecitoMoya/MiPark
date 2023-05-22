@@ -9,23 +9,27 @@ Parkings.init(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    barrio: {
+    zone: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    ciudad: {
+    city: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    provincia: {
+    province: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    coordinates: {
+    from_hour: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    pricePerHour: {
+    to_hour: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    price_per_hour: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -33,9 +37,16 @@ Parkings.init(
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
-    vehicleType: {
+    van_able: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    image: {
       type: Sequelize.STRING,
-      defaultValue: "car",
+    },
+    authorized: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
   },
   { sequelize: db, modelName: "parkings" }
