@@ -69,6 +69,16 @@ class ParkingController {
       .status(404)
       .send({ message: "Parking creation request couldn't be registered" });
   }
+
+  static async dropParking(req, res) {
+    const parking = await Parkings.findOne({
+      where: { id: req.body.id },
+    });
+    await parking.update({ dropped: true });
+    res.status(200).send({
+      message: "Parking was successfully deleted",
+    });
+  }
 }
 
 module.exports = ParkingController;

@@ -44,6 +44,10 @@ Parkings.init(
     authorized: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
+    },
+    dropped: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     }
   },
   { sequelize: db, modelName: "parkings" }

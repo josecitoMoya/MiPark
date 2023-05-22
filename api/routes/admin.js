@@ -7,6 +7,6 @@ router.delete("/users/delete-user", AdminController.deleteUser);
 router.put("/users/user-toggle-admin", AdminController.toggleAdmin);
 router.get("/parkings/search/all-pending-parkings", AdminController.getPendingParkings);
 router.put("/parkings/authorize-parking", AdminController.authorizeParking);
-router.delete("/parkings/delete-parking", AdminController.deleteParking);
+router.put("/parkings/drop-parking", AdminController.dropParking);
 
 module.exports = router;
