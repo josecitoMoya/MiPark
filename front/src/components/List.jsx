@@ -17,22 +17,12 @@ import { useEffect, useState } from "react";
 const List = () => {
   const [parks, setParks] = useState([]);
 
-  /*  async function getParks() {
-    const resul = await fetch(
-      "http://localhost:8080/api/parkings/search/allparkings"
-    );
-    const result = await resul.json();
-    console.log(result.data);
-    setParks(resul.data);
-    console.log(parks);
-  } */
-
   async function getParks() {
-    const search = await fetch(
+    const { data } = await axios.get(
       "http://localhost:8080/api/parkings/search/allparkings"
     );
-    const parks = await search.json();
-    setParks(parks.data);
+    console.log(data);
+    setParks(data.data);
   }
 
   useEffect(() => {
@@ -41,7 +31,6 @@ const List = () => {
 
   return (
     <div>
-      <h1>.</h1>
       <Wrap>
         {parks.map((park) => {
           return (

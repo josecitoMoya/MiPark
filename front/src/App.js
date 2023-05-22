@@ -13,6 +13,7 @@ import Park from "./components/Park";
 import NotFound from "./components/NotFound";
 import Anfitrion from "./components/Anfitrion";
 import Content from "./components/Content";
+import UserReserves from "./components/UserReserves";
 import Reserva from "./components/Reserva";
 import UserParks from "./components/User_parks";
 
@@ -22,7 +23,10 @@ function App() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user/me", { withCredentials: true })
-      .then((res) => dispatch(addUser(res.data.data)))
+      .then((res) => res.data)
+      .then(({ message, data }) => {
+        dispatch(addUser(data));
+      })
       .catch((err) => console.log(err));
   }, []);
   //Fin de persisntencia
@@ -47,10 +51,9 @@ function App() {
           <Route path={`/park/:id`} element={<Park />} />
           <Route path="/anfitrion" element={<Anfitrion />} />
           <Route path="/huesped" element={<Content />} />
-          <Route path="/user" element={<UserParks />} />          
+          <Route path="/reserves/:username/:id" element={<UserReserves />} />
+          <Route path="/user" element={<UserParks />} />
           <Route path="*" element={<NotFound />} />
-          
-
         </Routes>
       </div>
     </div>

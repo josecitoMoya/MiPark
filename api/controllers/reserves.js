@@ -27,10 +27,20 @@ class ReservesController {
 
   static async addReserve(req, res) {
     try {
-      const data = await Reserves.create(req.body);
-      return res.status(201).send({ message: "Added reserve", data });
+      const hours = req.body.hours;
+      for (let i = 0; i < hours.length; i++) {
+        let reserve = {
+          clientId: req.body.clientId,
+          parkingId: req.body.parkingId,
+          hour: hours[i],
+          price: req.body.price,
+          date: req.body.date,
+        };
+        const data = await Reserves.create(reserve);
+      }
+      return res.status(201).send({ message: "Added reserve" });
     } catch (error) {
-      return res.status(500).send({ message: "Error adding reserve jsjsjs" });
+      return res.status(500).send({ message: "Error adding reserve" });
     }
   }
 
@@ -46,6 +56,33 @@ class ReservesController {
       } else {
         return res.status(204).send({ message: "Reserves couldn't found" });
       }
+    } catch (error) {
+      return res.status(500).send({ message: "Error in server" });
+    }
+  }
+
+  static async updateState(req, res) {
+    try {
+      const id = req.params.id.slice(1);
+      const state = req.query;
+      const reserve = await Reserves.findOne({
+        where: {
+          id: id,
+        },
+        include: {
+          model: Parkings,
+          association: "parking",
+          foreignKey: "parkingId",
+        },
+      });
+      if (reserve) {
+        const data = await reserve.update(state);
+      } else {
+        return res.status(204).send({ message: "User couldn't found" });
+      }
+      return res
+        .status(200)
+        .send({ message: "User state was updated", data: reserve });
     } catch (error) {
       return res.status(500).send({ message: "Error in server" });
     }
