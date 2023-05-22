@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Cards from "../commons/card";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Content = () => {
   const [provinces, setProvinces] = useState([]); //pido todas las provincias con cocheras.
@@ -21,19 +21,22 @@ const Content = () => {
   const [roofChecked, setRoofChecked] = useState(false); // Soy el checkbox de roof
   const [truckChecked, setTruckChecked] = useState(false); // Soy el checkbox de van_able
   const [filtered, setFiltered] = useState([]); // recibo las cocheras dsp de los filtros
+  const [path, setPath] = useState({});
+
+  const location = useLocation();
 
   useEffect(() => {
-    const paraBuscar = {
-      city: city,
-      roof: false,
-      van_able: false,
-    };
     axios
       .get("http://localhost:8080/api/parkings/search/allparkings")
       .then((res) => res.data.data)
       .then((res) => {
-        console.log("ESTO ES LO QUE LLEGA A PRVINCES", res);
-        setProvinces(res);
+        let valoresUnicos = res.filter(
+          (objeto, index, self) =>
+            index === self.findIndex((o) => o.province === objeto.province)
+        );
+
+        setProvinces(valoresUnicos);
+        console.log("ESTO ES LO QUE LLEGA A PRVINCES", provinces);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -43,12 +46,21 @@ const Content = () => {
     const provinceSelected1 = e.target.value;
     if (!provinceSelected1) return alert("Por favor selecciona una provincia");
     setProvinceSelected(provinceSelected1);
+    console.log("SOY LA PROVINCIA SELECCIONADA", provinceSelected1);
 
     axios
       .get(
-        `http://localhost:8080/api/parkings/search/province/${provinceSelected1}`
+        `http://localhost:8080/api/parkings/search/?province=${provinceSelected1}`
       )
-      .then((res) => setCity(res.data.data))
+      .then((res) => res.data.data)
+      .then((res) => {
+        let valoresUnicos = res.filter(
+          (objeto, index, self) =>
+            index === self.findIndex((o) => o.city === objeto.city)
+        );
+
+        setCity(valoresUnicos);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -73,18 +85,20 @@ const Content = () => {
     const logPark = {
       city: city[0].city,
       provinces: provinceSelected,
-      van_able: truckChecked,
-      roof: roofChecked,
+      // van_able: truckChecked,
+      // roof: roofChecked,
     };
 
     axios
       .get(
-        `http://localhost:8080/api/parkings/searching?province=${logPark.provinces}&city=${logPark.city}&roof=${logPark.roof}&van_able=${logPark.van_able}`
+        `http://localhost:8080/api/parkings/search?province=${logPark.provinces}&city=${logPark.city}` //&roof=${logPark.roof}&van_able=${logPark.van_able}
       )
       .then((res) => setFiltered(res.data.data))
+      .then(setPath(false))
       .then(console.log(filtered))
       .catch((err) => err);
   };
+  console.log("SOY LO QUE LLEGA DE FILTRAR LA CIUDAD", filtered);
 
   return (
     <div>
@@ -120,7 +134,7 @@ const Content = () => {
                         onClick={handleProvince}
                       >
                         {provinces.map((item, i) => (
-                          <option value={item.province} key={i}>
+                          <option value={item.province} key={item.id}>
                             {item.province}
                           </option>
                         ))}
@@ -131,13 +145,13 @@ const Content = () => {
                         onClick={handleCity}
                       >
                         {city.map((item, i) => (
-                          <option value={item.city} key={i}>
+                          <option value={item.city} key={item.id}>
                             {item.city}
                           </option>
                         ))}
                       </Select>
                       <br />
-                      <Box alignContent={"space-between"}>
+                      {/* <Box alignContent={"space-between"}>
                         <Checkbox onChange={handleTruckCheckbox}>
                           Tenes una camioneta?
                         </Checkbox>
@@ -146,7 +160,7 @@ const Content = () => {
                         <Checkbox onChange={handleRoofCheckbox}>
                           Buscas que sea techada?
                         </Checkbox>
-                      </Box>
+                      </Box> */}
                       <br />
                       <br />
 
@@ -173,7 +187,7 @@ const Content = () => {
             <div>
               <Wrap key={i} w={"70%"} p={4} ml={"12%"}>
                 <Link to={`/reservation/${item.id}`}>
-                  <Cards data={item} />
+                  <Cards data={item} path={path} />
                 </Link>
               </Wrap>
             </div>

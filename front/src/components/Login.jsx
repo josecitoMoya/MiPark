@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import useInput from "../hooks/useInput";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/user";
 
 const Login = () => {
@@ -13,6 +13,7 @@ const Login = () => {
   const password = useInput();
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user);
   const handleSubmit = (e) => {
     e.preventDefault();
     const logUser = {
@@ -28,11 +29,18 @@ const Login = () => {
       })
       .then((res) => res.data.data)
       .then((res) => {
-        dispatch(addUser(res));
-        console.log("SOY RES DEl LOGIN DEL AXIOS EN FRONT", res);
-        navigate("/");
+        if (res.admin == true) {
+          console.log("SOY LO QUE LLEGA POR RES", res);
+          dispatch(addUser(res));
+          console.log("ENTRO EN TRUE", user);
+          navigate("/admin");
+        } else {
+          dispatch(addUser(res));
+          console.log("ENTRO EN FALSE", user);
+          navigate("/");
+        }
       })
-      // .then(console.log("SOY USER DEl LOGIN DEL AXIOS EN FRONT", user))
+
       .catch((err) => console.error(err));
   };
 

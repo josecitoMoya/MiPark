@@ -5,17 +5,19 @@ const initial = {
   firstName: "",
   lastName: "",
   email: "",
+  admin: false,
 };
 
 export const addUser = createAction("ADDUSER");
 
 const User = createReducer(initial, {
   [addUser]: (state, action) => {
-    const { id, firstName, lastName, email } = action.payload;
+    const { admin, id, firstName, lastName, email } = action.payload;
     state.id = id;
     state.firstName = firstName;
     state.lastName = lastName;
     state.email = email;
+    state.admin = admin;
   },
 });
 

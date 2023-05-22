@@ -16,6 +16,7 @@ import Content from "./components/Content";
 import UserReserves from "./components/UserReserves";
 import Reserva from "./components/Reserva";
 import UserParks from "./components/User_parks";
+import Admin from "./components/Admin";
 
 function App() {
   //Persistencia
@@ -23,10 +24,12 @@ function App() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user/me", { withCredentials: true })
+
       .then((res) => res.data)
       .then(({ message, data }) => {
         dispatch(addUser(data));
       })
+
       .catch((err) => console.log(err));
   }, []);
   //Fin de persisntencia
@@ -36,13 +39,9 @@ function App() {
   return (
     <div className="App">
       <Navbar2 />
-      <br />
       <Sidebar />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div style={{ marginLeft: "20%" }}>
+
+      <div style={{ marginLeft: "20%", marginTop: "130px" }}>
         <Routes>
           <Route path="/" element={<List />} />
           <Route path="/login" element={<Login />} />
@@ -53,6 +52,7 @@ function App() {
           <Route path="/huesped" element={<Content />} />
           <Route path="/reserves/:username/:id" element={<UserReserves />} />
           <Route path="/user" element={<UserParks />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
