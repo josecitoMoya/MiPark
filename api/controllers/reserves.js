@@ -27,10 +27,20 @@ class ReservesController {
 
   static async addReserve(req, res) {
     try {
-      const data = await Reserves.create(req.body);
-      return res.status(201).send({ message: "Added reserve", data });
+      const hours = req.body.hours;
+      for (let i = 0; i < hours.length; i++) {
+        let reserve = {
+          clientId: req.body.clientId,
+          parkingId: req.body.parkingId,
+          hour: hours[i],
+          price: req.body.price,
+          date: req.body.date,
+        };
+        const data = await Reserves.create(reserve);
+      }
+      return res.status(201).send({ message: "Added reserve" });
     } catch (error) {
-      return res.status(500).send({ message: "Error adding reserve jsjsjs" });
+      return res.status(500).send({ message: "Error adding reserve" });
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import axios, { Axios } from "axios";
@@ -28,6 +28,7 @@ const Reserva = () => {
   const [hour_f, setHour_f] = useState();
   const [hour_to, setHour_to] = useState();
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const listHour = [];
   let hours = [];
 
@@ -72,12 +73,16 @@ const Reserva = () => {
 
     const newReserve = {
       date: date,
-      hour: hours,
+      hours: hours,
       price: park.price_per_hour,
       parkingId: park.id,
       clientId: user.id,
     };
-    console.log(newReserve);
+    axios
+      .post("http://localhost:8080/api/reserves/add-reserve", newReserve)
+      .then(({ data }) =>
+        navigate(`/reserves/${user.firstName}-${user.lastName}/${user.id}`)
+      );
   };
 
   return (

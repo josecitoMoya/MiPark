@@ -88,7 +88,7 @@ const CardReserve = ({ reserve }) => {
         </CardBody>
 
         <CardFooter>
-          {updateReserve.state === "pending" && (
+          {updateReserve.state === "reserved" && (
             <>
               <Button onClick={onOpen}>Cancelar Reserva</Button>
 

@@ -10,7 +10,7 @@ Reserves.init(
     price: { type: Sequelize.DOUBLE, allowNull: false },
     state: {
       type: Sequelize.STRING,
-      defaultValue: "pending",
+      defaultValue: "reserved",
     },
   },
   { sequelize: db, modelName: "reserve" }
