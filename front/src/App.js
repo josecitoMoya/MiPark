@@ -14,6 +14,7 @@ import NotFound from "./components/NotFound";
 import Anfitrion from "./components/Anfitrion";
 import Content from "./components/Content";
 import Reserva from "./components/Reserva";
+import UserParks from "./components/User_parks";
 
 function App() {
   //Persistencia
@@ -46,7 +47,10 @@ function App() {
           <Route path={`/park/:id`} element={<Park />} />
           <Route path="/anfitrion" element={<Anfitrion />} />
           <Route path="/huesped" element={<Content />} />
+          <Route path="/user" element={<UserParks />} />          
           <Route path="*" element={<NotFound />} />
+          
+
         </Routes>
       </div>
     </div>
