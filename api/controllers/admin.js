@@ -27,16 +27,15 @@ class AdminController {
     });
   }
 
-  static async deleteParking(req, res) {
+  static async dropParking(req, res) {
     const parking = await Parkings.findOne({
       where: { id: req.body.id },
     });
-    await parking.destroy();
+    await parking.update({ dropped: true });
     res.status(200).send({
       message: "Parking was successfully deleted",
     });
   }
-
   static async getAllUsers(req, res) {
     const users = await Users.findAll({});
     if (users.length > 0) {
