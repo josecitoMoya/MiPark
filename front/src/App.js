@@ -11,6 +11,7 @@ import { addUser } from "./redux/user";
 import Navbar2 from "./components/Navbar2";
 import Anfitrion from "./components/Anfitrion";
 import Content from "./components/Content";
+import UserReserves from "./components/UserReserves";
 
 function App() {
   //Persistencia
@@ -18,7 +19,10 @@ function App() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user/me", { withCredentials: true })
-      .then((res) => dispatch(addUser(res.data.data)))
+      .then((res) => res.data)
+      .then(({ message, data }) => {
+        dispatch(addUser(data));
+      })
       .catch((err) => console.log(err));
   }, []);
   //Fin de persisntencia
@@ -39,6 +43,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/anfitrion" element={<Anfitrion />} />
           <Route path="/huesped" element={<Content />} />
+          <Route path="/reserves/:username/:id" element={<UserReserves />} />
         </Routes>
       </div>
     </div>

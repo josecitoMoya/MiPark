@@ -8,6 +8,10 @@ Reserves.init(
     date: { type: Sequelize.STRING, allowNull: false },
     hour: { type: Sequelize.INTEGER, allowNull: false },
     price: { type: Sequelize.DOUBLE, allowNull: false },
+    state: {
+      type: Sequelize.STRING,
+      defaultValue: "pending",
+    },
   },
   { sequelize: db, modelName: "reserve" }
 );

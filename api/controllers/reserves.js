@@ -50,6 +50,33 @@ class ReservesController {
       return res.status(500).send({ message: "Error in server" });
     }
   }
+
+  static async updateState(req, res) {
+    try {
+      const id = req.params.id.slice(1);
+      const state = req.query;
+      const reserve = await Reserves.findOne({
+        where: {
+          id: id,
+        },
+        include: {
+          model: Parkings,
+          association: "parking",
+          foreignKey: "parkingId",
+        },
+      });
+      if (reserve) {
+        const data = await reserve.update(state);
+      } else {
+        return res.status(204).send({ message: "User couldn't found" });
+      }
+      return res
+        .status(200)
+        .send({ message: "User state was updated", data: reserve });
+    } catch (error) {
+      return res.status(500).send({ message: "Error in server" });
+    }
+  }
 }
 
 module.exports = ReservesController;

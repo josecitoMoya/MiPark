@@ -27,7 +27,7 @@ const Navbar2 = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const { firstName, lastName, email } = useSelector((state) => state.user);
+  const { id, firstName, lastName, email } = useSelector((state) => state.user);
 
   const handleLogOut = (e) => {
     e.preventDefault(e);
@@ -97,7 +97,9 @@ const Navbar2 = () => {
                   <Button w={"190px"}> Historial </Button>
                   <br />
                   <br />
-                  <Button w={"190px"}> Reservas </Button>
+                  <Link to={`/reserves/${firstName}-${lastName}/${id}`}>
+                    <Button w={"190px"}> Reservas </Button>
+                  </Link>
                 </>
               ) : (
                 <div justifycontent="center">
