@@ -44,9 +44,6 @@ const Anfitrion = () => {
       to_hour: to_hour.value,
     };
 
-    console.log("ESTA ES LA CARGA DE ANFITRION", logPark);
-    console.log("SOY USER DE ANFITRION", user);
-
     axios
       .post("http://localhost:8080/api/parkings/createparking", logPark, {
         withCredentials: true,
