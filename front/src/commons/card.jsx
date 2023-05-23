@@ -11,18 +11,18 @@ import {
   Image,
   Heading,
   Center,
+  CheckboxGroup,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Cards = ({ data, path }) => {
-  const [parkinStatus, setParkinStatus] = useState(data);
+  const [parkinStatus, setParkinStatus] = useState(data.dropped);
   const { id } = useSelector((state) => state.user);
 
-  useEffect(() => {});
-
   const handleDelete = (e) => {
+    e.preventDefault();
     const id = {
       id: data.id,
     };

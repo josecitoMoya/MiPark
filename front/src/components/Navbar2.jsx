@@ -54,20 +54,39 @@ const Navbar2 = () => {
         top="0"
         zIndex="999"
       >
-        <Link to="/">
-          <Image
-            marginLeft={"150px"}
-            borderRadius="full"
-            boxSize="90px"
-            src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
-          />
-        </Link>
-        <Box>
-          <Link to={"/"}>
-            <Text fontFamily={"serif"} fontSize={"7xl"}>
-              miPark
-            </Text>
+        {admin == true ? (
+          <Link to={"/admin"}>
+            <Image
+              marginLeft={"150px"}
+              borderRadius="full"
+              boxSize="90px"
+              src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
+            />
           </Link>
+        ) : (
+          <Link to={"/"}>
+            <Image
+              marginLeft={"150px"}
+              borderRadius="full"
+              boxSize="90px"
+              src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
+            />
+          </Link>
+        )}
+        <Box>
+          {admin == true ? (
+            <Link to={"/admin"}>
+              <Text fontFamily={"serif"} fontSize={"7xl"}>
+                miPark
+              </Text>
+            </Link>
+          ) : (
+            <Link to={"/"}>
+              <Text fontFamily={"serif"} fontSize={"7xl"}>
+                miPark
+              </Text>
+            </Link>
+          )}
         </Box>
         {firstName ? (
           <Button ref={btnRef} onClick={onOpen} w={"200px"}>
