@@ -88,6 +88,17 @@ class UserController {
       res.status(500).json({ message: "User couldn't be updated" });
     }
   }
+
+  static async findUser(req, res) {
+    try {
+      const userId = req.params.userId;
+      console.log(userId);
+      const user = await User.findByPk(userId);
+      res.status(200).send({ message: "The user was found", data: user });
+    } catch (error) {
+      res.status(500).send({ message: "Error from serves searching user" });
+    }
+  }
 }
 
 module.exports = UserController;
