@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const { admin, firstName } = useSelector((state) => state.user);
-  console.log("SOY EL ADMIN DE SIDEBAR", admin);
 
   return (
     <div>
@@ -34,7 +33,7 @@ const Sidebar = () => {
             <Link>
               <Button w={"100%"}>Usuarios</Button>
             </Link>
-            <Link to={"/admin-cocheras"}>
+            <Link to={"/admin/parkings"}>
               <Button w={"100%"}>Cocheras</Button>
             </Link>
             <Link>
@@ -45,7 +44,7 @@ const Sidebar = () => {
             </Link>
           </Stack>
         ) : (
-          <Accordion allowMultiple>
+          <Accordion>
             <AccordionItem>
               <h2>
                 <AccordionButton _expanded={{ bg: "lightgrey" }}>

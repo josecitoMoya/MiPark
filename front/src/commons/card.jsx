@@ -114,7 +114,6 @@ const Cards = ({ data, path }) => {
                 </Center>
               </TagLabel>
             </Tag>
-            {/* <Center>En espera de autorizacion por el Admin</Center> */}
           </CardFooter>
         )}
       </Card>

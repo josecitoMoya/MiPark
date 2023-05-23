@@ -31,7 +31,7 @@ Parkings.init(
     },
     price_per_hour: {
       type: Sequelize.STRING,
-      allowNull: false,
+      defaultValue: "250",
     },
     roof: {
       type: Sequelize.BOOLEAN,

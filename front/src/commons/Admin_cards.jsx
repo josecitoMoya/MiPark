@@ -19,14 +19,12 @@ import { Link } from "react-router-dom";
 
 const AdminCards = ({ data }) => {
   const { firstName, lastName, id } = data.owner;
-  const [authorization, setAuthorization] = useState(data);
+  const [authorization, setAuthorization] = useState(data.authorized);
 
   const handleAutoritation = () => {
     const idCochera = {
       id: data.id,
     };
-
-    console.log("SOY LO QUE LE MANDO A AUTHORIZATION", idCochera);
 
     axios
       .put(
@@ -39,14 +37,14 @@ const AdminCards = ({ data }) => {
 
   return (
     <Card
-      direction={{ base: "row", sm: "row" }}
+      direction={{ base: "column", sm: "row" }}
       overflow="hidden"
       variant="outline"
     >
       <Image
         objectFit="cover"
         maxW={{ base: "100%", sm: "350px" }}
-        src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
+        src={data.image}
         alt="MiPark"
       />
 
@@ -57,16 +55,12 @@ const AdminCards = ({ data }) => {
           </Heading>
           <br />
           <Text py="2" minW={"100%"}>
-            Provincia: {data.province}.
-          </Text>
-          <Text py="2" minW={"100%"}>
-            Ciudad: {data.city}.
-          </Text>
-          <Text py="2" minW={"100%"}>
-            Domicilio: {data.address}.
-          </Text>
-          <Text py="2" minW={"100%"}>
-            Horarios: {data.from_hour} - {data.to_hour}
+            Esta cochera queda en el barrio {data.zone},{" "}
+            {data.van_able
+              ? "tiene capacidad para albergar camionetas. "
+              : "solo tiene capacidad para albergar automoviles. "}
+            {data.roof ? "Es techada, " : "No es techada ,"} y sus horarios de
+            ocupacion son de {data.from_hour} hrs a {data.to_hour} hrs.
           </Text>
           <br />
           <Text color="blue.600" fontSize="2xl">
@@ -90,7 +84,7 @@ const AdminCards = ({ data }) => {
             ) : (
               <Button
                 variant="solid"
-                colorScheme="green"
+                colorScheme="red"
                 onClick={handleAutoritation}
               >
                 Desautorizar cochera
