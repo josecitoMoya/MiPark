@@ -34,7 +34,8 @@ const CardReserve = ({ reserve }) => {
   const user = useSelector((state) => state.user);
   const [updateReserve, setUpdateReserve] = useState(reserve);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const address = reserve.parking.address;
+  const email = user.email;
   const handlerCancel = () => {
     const date = new Date();
     const reservedDate = convertDateHour(reserve.date, reserve.hour);
@@ -43,7 +44,7 @@ const CardReserve = ({ reserve }) => {
       axios
         .put(
           `http://localhost:8080/api/reserves/state:${reserve.id}?state=cancelled`,
-          { withCredentials: true }
+          { withCredentials: true, email: email, address: address }
         )
         .then(({ data }) => data)
         .then(({ message, data }) => {
