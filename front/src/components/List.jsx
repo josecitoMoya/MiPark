@@ -33,6 +33,7 @@ const List = () => {
   return (
     <div>
       <Wrap>
+
         {!parks ? (
           <h1>NO hay Parks</h1>
         ) : (
@@ -42,7 +43,6 @@ const List = () => {
                 <CardBody>
                   <Image
                     //  onClick={() => handleReserva(park)}
-
                     src={park.image}
                     alt="Green double couch with wooden legs"
                     borderRadius="lg"

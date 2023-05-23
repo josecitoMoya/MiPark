@@ -20,7 +20,6 @@ const Anfitrion = () => {
   const province = useInput();
   const roof = useInput();
   const van_able = useInput();
-  const price_per_hour = useInput();
   const [roofChecked, setRoofChecked] = useState(false);
   const [truckChecked, setTruckChecked] = useState(false);
   const from_hour = useInput();
@@ -37,15 +36,11 @@ const Anfitrion = () => {
       province: province.value,
       roof: roofChecked,
       van_able: truckChecked,
-      price_per_hour: price_per_hour.value,
       hablitada: false,
       ownerId: user.id,
       from_hour: from_hour.value,
       to_hour: to_hour.value,
     };
-
-    console.log("ESTA ES LA CARGA DE ANFITRION", logPark);
-    console.log("SOY USER DE ANFITRION", user);
 
     axios
       .post("http://localhost:8080/api/parkings/createparking", logPark, {
@@ -78,7 +73,7 @@ const Anfitrion = () => {
           overflow="hidden"
         >
           <Box p="6">
-            <Box display="flex" alignItems="center" justifycontent={"center"}>
+            <Box display="flex" alignItems="center" justifyContent={"center"}>
               <Box
                 color="black"
                 fontWeight="semibold"
@@ -131,13 +126,6 @@ const Anfitrion = () => {
                       variant="outline"
                       type="number"
                       placeholder="Hasta que hora esta disponible"
-                      required
-                    />
-                    <Input
-                      {...price_per_hour}
-                      variant="outline"
-                      placeholder="Precio"
-                      type="number"
                       required
                     />
                     <br />

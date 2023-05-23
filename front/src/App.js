@@ -16,8 +16,12 @@ import Content from "./components/Content";
 import UserReserves from "./components/UserReserves";
 import Reserva from "./components/Reserva";
 import UserParks from "./components/User_parks";
+import Admin from "./components/Admin";
+import AdminParks from "./components/Admin_parks";
 
 function App() {
+  const user = useSelector((state) => state.user);
+
   //Persistencia
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,25 +40,29 @@ function App() {
   return (
     <div className="App">
       <Navbar2 />
-      <br />
       <Sidebar />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div style={{ marginLeft: "20%" }}>
-        <Routes>
-          <Route path="/" element={<List />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path={`/reservation/:id`} element={<Reserva />} />
-          <Route path={`/park/:id`} element={<Park />} />
-          <Route path="/anfitrion" element={<Anfitrion />} />
-          <Route path="/huesped" element={<Content />} />
-          <Route path="/reserves/:username/:id" element={<UserReserves />} />
-          <Route path="/user" element={<UserParks />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      <div style={{ marginLeft: "20%", marginTop: "130px" }}>
+        {user && user.admin ? (
+          <Routes>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/parkings" element={<AdminParks />}></Route>
+            <Route path="/admin/users"></Route>
+            <Route path="/admin/reserves"></Route>
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={<List />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path={`/reservation/:id`} element={<Reserva />} />
+            <Route path={`/park/:id`} element={<Park />} />
+            <Route path="/anfitrion" element={<Anfitrion />} />
+            <Route path="/huesped" element={<Content />} />
+            <Route path="/reserves/:username/:id" element={<UserReserves />} />
+            <Route path="/user" element={<UserParks />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
       </div>
     </div>
   );

@@ -47,9 +47,12 @@ class UserController {
 
   static async getUser(req, res) {
     const token = req.cookies.token;
+
     if (token) {
       const payload = await Token.validateToken(token);
-
+      if (!payload) {
+        return res.status(404).send({ message: "Token expired" });
+      }
       if (payload) {
         const user = await User.findOne({ where: { email: payload.email } });
         const data = {

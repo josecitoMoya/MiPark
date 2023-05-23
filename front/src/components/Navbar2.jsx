@@ -27,7 +27,9 @@ const Navbar2 = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const { id, firstName, lastName, email } = useSelector((state) => state.user);
+  const { id, firstName, lastName, email, admin } = useSelector(
+    (state) => state.user
+  );
 
   const handleLogOut = (e) => {
     e.preventDefault(e);
@@ -52,20 +54,39 @@ const Navbar2 = () => {
         top="0"
         zIndex="999"
       >
-        <Link to="/">
-          <Image
-            marginLeft={"75px"}
-            borderRadius="full"
-            boxSize="90px"
-            src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
-          />
-        </Link>
-        <Box>
-          <Link to={"/"}>
-            <Text fontFamily={"serif"} fontSize={"7xl"}>
-              miPark
-            </Text>
+        {admin == true ? (
+          <Link to={"/admin"}>
+            <Image
+              marginLeft={"150px"}
+              borderRadius="full"
+              boxSize="90px"
+              src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
+            />
           </Link>
+        ) : (
+          <Link to={"/"}>
+            <Image
+              marginLeft={"150px"}
+              borderRadius="full"
+              boxSize="90px"
+              src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
+            />
+          </Link>
+        )}
+        <Box>
+          {admin == true ? (
+            <Link to={"/admin"}>
+              <Text fontFamily={"serif"} fontSize={"7xl"}>
+                miPark
+              </Text>
+            </Link>
+          ) : (
+            <Link to={"/"}>
+              <Text fontFamily={"serif"} fontSize={"7xl"}>
+                miPark
+              </Text>
+            </Link>
+          )}
         </Box>
         {firstName ? (
           <Button ref={btnRef} onClick={onOpen} w={"200px"}>
@@ -94,17 +115,28 @@ const Navbar2 = () => {
             <DrawerBody alignItems={"center"} p={10} w={"400px"}>
               {firstName ? (
                 <>
-                  <Button w={"190px"}> Historial </Button>
+                  <Button w={"250px"} onClick={onClose}>
+                    Mi historial
+                  </Button>
+                  <br />
+                  <br />
+                  <Link to={"/user"}>
+                    <Button w={"250px"} onClick={onClose}>
+                      Mis cocheras
+                    </Button>
+                  </Link>
                   <br />
                   <br />
                   <Link to={`/reserves/${firstName}-${lastName}/${id}`}>
-                    <Button w={"190px"}> Reservas </Button>
+                    <Button w={"250px"} onClick={onClose}>
+                      Reservas
+                    </Button>
                   </Link>
                 </>
               ) : (
-                <div justifycontent="center">
+                <>
                   <Link to={"login"}>
-                    <Button w={"190px"} onClick={onClose}>
+                    <Button w={"250px"} onClick={onClose}>
                       Iniciar Sesion
                     </Button>
                   </Link>
@@ -112,15 +144,15 @@ const Navbar2 = () => {
 
                   <br />
                   <Link to={"/signup"}>
-                    <Button w={"190px"} onClick={onClose}>
+                    <Button w={"250px"} onClick={onClose}>
                       Registrarse
                     </Button>
                   </Link>
-                </div>
+                </>
               )}
             </DrawerBody>
 
-            <DrawerFooter justifycontent={"center"}>
+            <DrawerFooter alignItems={"center"}>
               {firstName ? (
                 <Link to={"/logout"}>
                   <Button onClick={handleLogOut} w={"250px"}>
@@ -128,7 +160,7 @@ const Navbar2 = () => {
                   </Button>
                 </Link>
               ) : (
-                <h1>.</h1>
+                <></>
               )}
             </DrawerFooter>
           </DrawerContent>
