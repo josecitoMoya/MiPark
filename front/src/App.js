@@ -19,17 +19,17 @@ import UserParks from "./components/User_parks";
 import Admin from "./components/Admin";
 
 function App() {
+  const user = useSelector((state) => state.user);
+
   //Persistencia
   const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/user/me", { withCredentials: true })
-
       .then((res) => res.data)
       .then(({ message, data }) => {
         dispatch(addUser(data));
       })
-
       .catch((err) => console.log(err));
   }, []);
   //Fin de persisntencia
@@ -40,21 +40,28 @@ function App() {
     <div className="App">
       <Navbar2 />
       <Sidebar />
-
       <div style={{ marginLeft: "20%", marginTop: "130px" }}>
-        <Routes>
-          <Route path="/" element={<List />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path={`/reservation/:id`} element={<Reserva />} />
-          <Route path={`/park/:id`} element={<Park />} />
-          <Route path="/anfitrion" element={<Anfitrion />} />
-          <Route path="/huesped" element={<Content />} />
-          <Route path="/reserves/:username/:id" element={<UserReserves />} />
-          <Route path="/user" element={<UserParks />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        {user && user.admin ? (
+          <Routes>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/parkings"></Route>
+            <Route path="/admin/users"></Route>
+            <Route path="/admin/reserves"></Route>
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={<List />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path={`/reservation/:id`} element={<Reserva />} />
+            <Route path={`/park/:id`} element={<Park />} />
+            <Route path="/anfitrion" element={<Anfitrion />} />
+            <Route path="/huesped" element={<Content />} />
+            <Route path="/reserves/:username/:id" element={<UserReserves />} />
+            <Route path="/user" element={<UserParks />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
       </div>
     </div>
   );
