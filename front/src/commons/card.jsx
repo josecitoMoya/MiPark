@@ -1,28 +1,28 @@
 import {
   Card,
-  CardHeader,
+  Avatar,
   CardBody,
   CardFooter,
   Stack,
   Text,
   Button,
-  ButtonGroup,
+  Tag,
   Divider,
   Image,
   Heading,
   Center,
+  TagLabel,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Cards = ({ data, path }) => {
-  const [parkinStatus, setParkinStatus] = useState(data);
+  const [parkinStatus, setParkinStatus] = useState(data.dropped);
   const { id } = useSelector((state) => state.user);
 
-  useEffect(() => {});
-
   const handleDelete = (e) => {
+    e.preventDefault();
     const id = {
       id: data.id,
     };
@@ -42,7 +42,7 @@ const Cards = ({ data, path }) => {
         <Image
           objectFit="cover"
           maxW={{ base: "100%", sm: "350px" }}
-          src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
+          src={data.image}
           alt="MiPark"
         />
         <Stack>
@@ -67,35 +67,55 @@ const Cards = ({ data, path }) => {
           </CardBody>
           <Divider />
         </Stack>
-        <CardFooter>
-          <Center alignItems={"center"}>
-            {path ? (
-              <Stack spacing={2}>
-                {parkinStatus == false ? (
-                  <Button
-                    variant="solid"
-                    colorScheme="green"
-                    onClick={handleDelete}
-                  >
-                    Activar cochera
-                  </Button>
-                ) : (
-                  <Button
-                    variant="solid"
-                    colorScheme="red"
-                    onClick={handleDelete}
-                  >
-                    Desactivar cochera
-                  </Button>
-                )}
-              </Stack>
-            ) : (
-              <Button variant="solid" colorScheme="blue">
-                Reservar
-              </Button>
-            )}
-          </Center>
-        </CardFooter>
+        {data.authorized == true ? (
+          <CardFooter>
+            <Center alignItems={"center"}>
+              {path ? (
+                <Stack spacing={2}>
+                  {parkinStatus == false ? (
+                    <Button
+                      variant="solid"
+                      colorScheme="green"
+                      onClick={handleDelete}
+                    >
+                      Activar cochera
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="solid"
+                      colorScheme="red"
+                      onClick={handleDelete}
+                    >
+                      Desactivar cochera
+                    </Button>
+                  )}
+                </Stack>
+              ) : (
+                <Button variant="solid" colorScheme="blue">
+                  Reservar
+                </Button>
+              )}
+            </Center>
+          </CardFooter>
+        ) : (
+          <CardFooter>
+            <Tag size="lg" colorScheme="red" borderRadius="full">
+              <Avatar
+                src="https://w7.pngwing.com/pngs/887/272/png-transparent-cartoon-illustration-police-work-police-officer-cartoon-work.png"
+                size="lg"
+                name="Segun Adebayo"
+                ml={-1}
+                mr={2}
+              />
+
+              <TagLabel>
+                <Center textAlign={"left"}>
+                  En espera de autorizacion por el Admin
+                </Center>
+              </TagLabel>
+            </Tag>
+          </CardFooter>
+        )}
       </Card>
       <br />
     </>

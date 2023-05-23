@@ -17,6 +17,7 @@ import UserReserves from "./components/UserReserves";
 import Reserva from "./components/Reserva";
 import UserParks from "./components/User_parks";
 import Admin from "./components/Admin";
+import AdminCocheras from "./components/Admin_cocheras";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -44,7 +45,7 @@ function App() {
         {user && user.admin ? (
           <Routes>
             <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/parkings"></Route>
+            <Route path="/admin/parkings" element={<AdminCocheras />}></Route>
             <Route path="/admin/users"></Route>
             <Route path="/admin/reserves"></Route>
           </Routes>
