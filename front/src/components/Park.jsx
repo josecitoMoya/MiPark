@@ -72,6 +72,7 @@ const Park = () => {
       <Text fontSize="5xl" mt="4">
         Park Details{" "}
       </Text>
+
       <Card
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
@@ -122,10 +123,15 @@ const Park = () => {
 
               <CardBody w="200px">
                 <Stack spacing={1} direction="column">
-                  <p>
-                    Nuestro Park esta ubicado en zona centro y cuenta con
-                    vigilancia las 24hs del dia{" "}
-                  </p>
+                  <Text py="2" minW={"100%"}>
+                    Esta cochera queda en el barrio {park.zone},{" "}
+                    {park.van_able
+                      ? "tiene capacidad para albergar camionetas. "
+                      : "solo tiene capacidad para albergar automoviles. "}
+                    {park.roof ? "Es techada, " : "No es techada ,"} y sus
+                    horarios de ocupacion son de {park.from_hour} hrs a{" "}
+                    {park.to_hour} hrs.
+                  </Text>
                 </Stack>
               </CardBody>
             </Center>
