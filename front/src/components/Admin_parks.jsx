@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import AdminCards from "../commons/Admin_cards";
 
-const AdminCocheras = () => {
+const AdminParks = () => {
   const location = useLocation();
 
   const user = useSelector((state) => state.user);
@@ -36,4 +36,4 @@ const AdminCocheras = () => {
   );
 };
 
-export default AdminCocheras;
+export default AdminParks;

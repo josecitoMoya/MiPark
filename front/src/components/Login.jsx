@@ -52,7 +52,7 @@ const Login = () => {
           overflow="hidden"
         >
           <Box p="6">
-            <Box display="flex" alignItems="center" justifycontent={"center"}>
+            <Box display="flex" alignItems="center" justifyContent={"center"}>
               <Box
                 color="black"
                 fontWeight="semibold"
