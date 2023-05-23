@@ -31,7 +31,7 @@ Parkings.init(
     },
     price_per_hour: {
       type: Sequelize.STRING,
-      allowNull: false,
+      defaultValue: "250",
     },
     roof: {
       type: Sequelize.BOOLEAN,
@@ -43,6 +43,8 @@ Parkings.init(
     },
     image: {
       type: Sequelize.STRING,
+      defaultValue:
+        "https://static.tokkobroker.com/pictures/81485106017997863420224328799196031790185228762980714819055081839658331778906.jpg",
     },
     authorized: {
       type: Sequelize.BOOLEAN,

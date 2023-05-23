@@ -3,8 +3,34 @@ const Parkings = require("../models/Parkings.js");
 const Users = require("../models/Users.js");
 
 class AdminController {
+  static async getAllParkings(req, res) {
+    const parks = await Parkings.findAll({
+      include: {
+        id: Users.id,
+        association: "owner",
+        foreignKey: "owner.Id",
+      },
+    });
+    if (parks.length > 0) {
+      return res.status(200).send({
+        message: "Authorized parkings are sent",
+        data: parks,
+      });
+    }
+    return res
+      .status(204)
+      .send({ message: "There are no authorized parkings." });
+  }
+
   static async getPendingParkings(req, res) {
-    const parks = await Parkings.findAll({ where: { authorized: false } });
+    const parks = await Parkings.findAll({
+      where: { authorized: false },
+      include: {
+        id: Users.id,
+        association: "owner",
+        foreignKey: "ownerId",
+      },
+    });
     if (parks.length > 0) {
       return res.status(200).send({
         message: "Parkings with pending authorization requests are sent",
@@ -20,7 +46,9 @@ class AdminController {
     const parking = await Parkings.findOne({
       where: { id: req.body.id },
     });
-    await parking.update({ authorized: true });
+    parking.authorized == false
+      ? await parking.update({ authorized: true })
+      : await parking.update({ authorized: false });
     res.status(200).send({
       message: "Parking was successfully authorized",
       data: parking,

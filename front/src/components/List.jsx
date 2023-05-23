@@ -32,7 +32,7 @@ const List = () => {
   return (
     <div>
       <Wrap>
-        {parks.map((park) => {
+        {parks?.map((park) => {
           return (
             <Card maxW="md" key={park.id} bg="blue.100">
               <CardBody>

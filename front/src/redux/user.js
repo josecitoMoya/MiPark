@@ -5,7 +5,7 @@ const initial = {
   firstName: "",
   lastName: "",
   email: "",
-  admin: false,
+  admin: "",
 };
 
 export const addUser = createAction("ADDUSER");
