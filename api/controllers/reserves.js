@@ -29,6 +29,21 @@ class ReservesController {
     }
   }
 
+  static async allReservesPark(req, res) {
+    const day = new Date().toLocaleDateString();
+    try {
+      const parkId = req.params.parkId;
+      const reserves = await Reserves.findAll({
+        where: { parkingId: parkId, date: day, state: "reserved" },
+      });
+      return res
+        .status(200)
+        .send({ message: "All parking reservations", data: reserves });
+    } catch (error) {
+      return res.status(500).send({ message: "Error searching all server" });
+    }
+  }
+
   static async addReserve(req, res) {
     let email = req.body.email;
     let address = req.body.address;
