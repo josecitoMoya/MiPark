@@ -4,7 +4,14 @@ const Users = require("../models/Users.js");
 
 class AdminController {
   static async getPendingParkings(req, res) {
-    const parks = await Parkings.findAll({ where: { authorized: false } });
+    const parks = await Parkings.findAll({
+      where: { authorized: false },
+      include: {
+        id: Users.id,
+        association: "owner",
+        foreignKey: "ownerId",
+      },
+    });
     if (parks.length > 0) {
       return res.status(200).send({
         message: "Parkings with pending authorization requests are sent",
