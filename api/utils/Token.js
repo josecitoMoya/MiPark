@@ -7,6 +7,10 @@ module.exports = class Token {
   }
 
   static validateToken(token) {
-    return jwt.verify(token, SECRET);
+    try {
+      return jwt.verify(token, SECRET);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
