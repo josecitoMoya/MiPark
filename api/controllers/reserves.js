@@ -25,9 +25,9 @@ class ReservesController {
       });
       return res
         .status(200)
-        .send({ message: "Reserves founded", data: reserves });
+        .send({ message: "Reserves found", data: reserves });
     } catch (error) {
-      return res.status(500).send({ message: "Error seraching reserve" });
+      return res.status(500).send({ message: "Error searching reserve" });
     }
   }
 
@@ -78,7 +78,7 @@ class ReservesController {
         };
         const data = await Reserves.create(reserve);
       }
-      await enviarEmailConfirmacion(email, address);
+      const sentEmail = await enviarEmailConfirmacion(email, address);
       return res.status(201).send({ message: "Added reserve" });
     } catch (error) {
       return res.status(500).send({ message: "Error adding reserve" });
@@ -120,7 +120,7 @@ class ReservesController {
       });
       if (reserve) {
         const data = await reserve.update(state);
-        await enviarEmailCancelacion(email, address);
+        const sentEmail = await enviarEmailCancelacion(email, address);
       } else {
         return res.status(204).send({ message: "Reserve couldn't be found" });
       }

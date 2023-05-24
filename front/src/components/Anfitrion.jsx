@@ -53,13 +53,11 @@ const Anfitrion = () => {
   const handleRoofCheckbox = (e) => {
     e.preventDefault();
     setRoofChecked(e.target.checked);
-    console.log("SOY EL CHECKBOX", e.target.checked);
   };
 
   const handleTruckCheckbox = (e) => {
     e.preventDefault();
     setTruckChecked(e.target.checked);
-    console.log("SOY EL CHECKBOX", e.target.checked);
   };
 
   return (

@@ -17,8 +17,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const AdminCards = ({ data }) => {
-  const { firstName, lastName, id } = data.owner;
+const AdminCards = ({ data, path }) => {
   const [authorization, setAuthorization] = useState(data.authorized);
 
   const handleAutoritation = () => {
@@ -50,9 +49,12 @@ const AdminCards = ({ data }) => {
 
       <Stack>
         <CardBody textAlign={"justify"}>
-          <Heading size="xl">
-            User: {firstName} {lastName}
-          </Heading>
+          {path && (
+            <Heading size="xl">
+              User: {data.owner.firstName} {data.owner.lastName}
+            </Heading>
+          )}
+
           <br />
           <Text py="2" minW={"100%"}>
             Esta cochera queda en el barrio {data.zone},{" "}

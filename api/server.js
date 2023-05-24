@@ -13,7 +13,7 @@ const db = require("./db");
 const PORT = config.PORT;
 const app = express();
 
-//MIDLEWARES
+//MIDDLEWARES
 app.use(
   cors({
     origin: "http://localhost:3000",

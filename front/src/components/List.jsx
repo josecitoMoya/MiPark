@@ -22,7 +22,6 @@ const List = () => {
     const { data } = await axios.get(
       "http://localhost:8080/api/parkings/search/allparkings"
     );
-    console.log(data);
     setParks(data.data);
   }
 

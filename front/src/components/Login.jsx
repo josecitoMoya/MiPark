@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Input, Button, Text, Box, Center } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import useInput from "../hooks/useInput";
-import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/user";
@@ -20,8 +19,6 @@ const Login = () => {
       email: email.value,
       password: password.value,
     };
-
-    // dispatch(addUser(logUser));
 
     axios
       .post("http://localhost:8080/api/user/login", logUser, {

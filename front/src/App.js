@@ -17,6 +17,8 @@ import UserReserves from "./components/UserReserves";
 import Reserva from "./components/Reserva";
 import UserParks from "./components/User_parks";
 import Admin from "./components/Admin";
+import AdminUser from "./components/AdminUsers";
+import UserProfile from "./components/UserProfile";
 import AdminParks from "./components/Admin_parks";
 import AdminReservations from "./components/Admin_reservations";
 
@@ -34,7 +36,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
-  //Fin de persisntencia
+  //Fin de persistencia
 
   const park = useSelector((state) => state.reserva);
 
@@ -47,11 +49,16 @@ function App() {
           <Routes>
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/parkings" element={<AdminParks />}></Route>
-            <Route path="/admin/users"></Route>
+
             <Route
               path="/admin/reserves"
               element={<AdminReservations />}
             ></Route>
+
+            <Route path="/admin/users" element={<AdminUser />}></Route>
+            <Route path="/admin/user/:userId" element={<UserProfile />}></Route>
+            <Route path="*" element={<NotFound />} />
+
           </Routes>
         ) : (
           <Routes>
