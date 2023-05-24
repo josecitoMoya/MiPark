@@ -62,94 +62,107 @@ const Anfitrion = () => {
 
   return (
     <>
-      <Center h="75%" color="white" marginTop={"5%"}>
+      <Center
+        h="75%"
+        color="white"
+        marginTop={"5%"}
+        borderWidth="3px"
+        borderRadius="lg"
+        width={"50%"}
+      >
         <Box
-          w={"75%"}
-          maxW="50%"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
+          display="inline-block"
+          p={"50px"}
+          alignItems="center"
+          justifyContent={"center"}
+          color="black"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="2xl"
+          textTransform="uppercase"
         >
-          <Box p="6">
-            <Box display="flex" alignItems="center" justifyContent={"center"}>
-              <Box
-                color="black"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="2xl"
-                textTransform="uppercase"
-                ml="2"
-                w={"80%"}
-              >
-                <br />
-                <br />
-                <Text fontSize={"4xl"}>Alta de cochera</Text>
-                <br />
-                <br />
-                <form onSubmit={handlerCochera}>
-                  <Stack spacing={5}>
-                    <Input
-                      {...address}
-                      variant="outline"
-                      placeholder="Domicilio"
-                      required
-                    />
-                    <Input
-                      {...zone}
-                      variant="outline"
-                      placeholder="Barrio"
-                      required
-                    />
-                    <Input
-                      {...city}
-                      variant="outline"
-                      placeholder="Ciudad"
-                      required
-                    />
-                    <Input
-                      {...province}
-                      variant="outline"
-                      placeholder="Provincia"
-                      required
-                    />
-                    <Input
-                      {...from_hour}
-                      variant="outline"
-                      type="number"
-                      placeholder="Desde que hora esta disponible"
-                      required
-                    />
-                    <Input
-                      {...to_hour}
-                      variant="outline"
-                      type="number"
-                      placeholder="Hasta que hora esta disponible"
-                      required
-                    />
-                    <br />
+          <Text fontSize={"4xl"} textAlign={"center"}>
+            Alta de cochera
+          </Text>
 
-                    <Box p={4} justifycontent={"left"}>
-                      <Checkbox {...roof} onChange={handleRoofCheckbox}>
-                        Es techada?
-                      </Checkbox>
+          <form onSubmit={handlerCochera} style={{ padding: "30px" }}>
+            <Stack spacing={5}>
+              <Input
+                {...address}
+                htmlSize={50}
+                width={"auto"}
+                backgroundColor={"white"}
+                variant="outline"
+                placeholder="Domicilio"
+                required
+              />
+              <Input
+                {...zone}
+                htmlSize={50}
+                width={"auto"}
+                backgroundColor={"white"}
+                variant="outline"
+                placeholder="Barrio"
+                required
+              />
+              <Input
+                {...city}
+                htmlSize={50}
+                width={"auto"}
+                backgroundColor={"white"}
+                variant="outline"
+                placeholder="Ciudad"
+                required
+              />
+              <Input
+                {...province}
+                htmlSize={50}
+                width={"auto"}
+                backgroundColor={"white"}
+                variant="outline"
+                placeholder="Provincia"
+                required
+              />
+              <Input
+                {...from_hour}
+                htmlSize={50}
+                width={"auto"}
+                backgroundColor={"white"}
+                variant="outline"
+                type="number"
+                placeholder="Desde que hora esta disponible"
+                required
+              />
+              <Input
+                {...to_hour}
+                htmlSize={50}
+                width={"auto"}
+                backgroundColor={"white"}
+                variant="outline"
+                type="number"
+                placeholder="Hasta que hora esta disponible"
+                required
+              />
 
-                      <br />
-                      <Checkbox {...van_able} onChange={handleTruckCheckbox}>
-                        Es apta para camionetas?
-                      </Checkbox>
-                    </Box>
-                    <br />
-                    <Button type="submit" colorScheme="blue">
-                      Cargar cochera
-                    </Button>
-                  </Stack>
-                  <input type="hidden" value={user} />
-                </form>
-                <br />
-                <br />
+              <Box p={4} justifycontent={"left"}>
+                <Stack p={2}>
+                  <Checkbox {...roof} onChange={handleRoofCheckbox}>
+                    Es techada?
+                  </Checkbox>
+                </Stack>
+                <Stack p={2}>
+                  <Checkbox {...van_able} onChange={handleTruckCheckbox}>
+                    Es apta para camionetas?
+                  </Checkbox>
+                </Stack>
               </Box>
-            </Box>
-          </Box>
+
+              <Button type="submit" colorScheme="blue">
+                Cargar cochera
+              </Button>
+            </Stack>
+            <input type="hidden" value={user} />
+          </form>
         </Box>
       </Center>
     </>
