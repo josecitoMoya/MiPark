@@ -131,10 +131,6 @@ const Park = () => {
               </CardBody>
             </Center>
           </Flex>
-
-          <CardFooter>
-            <Button colorScheme="orange">Agregar a Carrito</Button>
-          </CardFooter>
         </Stack>
       </Card>
 

@@ -45,19 +45,14 @@ const Navbar2 = () => {
     <div>
       <Flex
         width="100%"
-        minHeight="90px"
         backgroundColor="lightblue"
         alignItems="center"
         justifyContent="space-between"
         p="2"
-        position="fixed"
-        top="0"
-        zIndex="999"
       >
         {admin == true ? (
           <Link to={"/admin"}>
             <Image
-              marginLeft={"150px"}
               borderRadius="full"
               boxSize="90px"
               src="https://i.postimg.cc/Tww4LMvp/unnamed.png"
@@ -66,7 +61,7 @@ const Navbar2 = () => {
         ) : (
           <Link to={"/"}>
             <Image
-              marginLeft={"150px"}
+              marginLeft={"20px"}
               borderRadius="full"
               boxSize="90px"
               src="https://i.postimg.cc/Tww4LMvp/unnamed.png"

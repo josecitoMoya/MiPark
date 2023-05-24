@@ -30,61 +30,58 @@ const List = () => {
   }, []);
 
   return (
-    <div>
-      <Wrap>
+    <Wrap h={"100%"}>
+      {!parks ? (
+        <h1>NO hay Parks</h1>
+      ) : (
+        parks.map((park) => {
+          return (
+            <Card maxW="md" key={park.id} bg="blue.100">
+              <CardBody>
+                <Image
+                  //  onClick={() => handleReserva(park)}
+                  src={park.image}
+                  alt="Green double couch with wooden legs"
+                  borderRadius="lg"
+                />
+                <br />
 
-        {!parks ? (
-          <h1>NO hay Parks</h1>
-        ) : (
-          parks.map((park) => {
-            return (
-              <Card maxW="md" key={park.id} bg="blue.100">
-                <CardBody>
-                  <Image
-                    //  onClick={() => handleReserva(park)}
-                    src={park.image}
-                    alt="Green double couch with wooden legs"
-                    borderRadius="lg"
-                  />
-                  <br />
-
-                  <Link to={`/reservation/${park.id}`}>
-                    {user.id ? (
-                      <Button variant="solid" colorScheme="blue">
-                        Reserve now
-                      </Button>
-                    ) : (
-                      ""
-                    )}
-                  </Link>
-
-                  <Link to={`/park/${park.id}`}>
-                    <Button variant="ghost" colorScheme="blue">
-                      Details
+                <Link to={`/reservation/${park.id}`}>
+                  {user.id ? (
+                    <Button variant="solid" colorScheme="blue">
+                      Reserve now
                     </Button>
-                  </Link>
+                  ) : (
+                    ""
+                  )}
+                </Link>
 
-                  <Stack mt="6" spacing="3">
-                    <Heading size="md">Park reservation</Heading>
-                    <div>
-                      <li>Ciudad : {park.city}</li>
-                      <li>Provincia :{park.province}</li>
-                      <li>ubicacion : {park.address}</li>
-                    </div>
+                <Link to={`/park/${park.id}`}>
+                  <Button variant="ghost" colorScheme="blue">
+                    Details
+                  </Button>
+                </Link>
 
-                    <Text color="blue.600" fontSize="2xl">
-                      Valor $ {park.price_per_hour}
-                    </Text>
-                  </Stack>
-                </CardBody>
+                <Stack mt="6" spacing="3">
+                  <Heading size="md">Park reservation</Heading>
+                  <div>
+                    <li>Ciudad : {park.city}</li>
+                    <li>Provincia :{park.province}</li>
+                    <li>ubicacion : {park.address}</li>
+                  </div>
 
-                <Divider />
-              </Card>
-            );
-          })
-        )}
-      </Wrap>
-    </div>
+                  <Text color="blue.600" fontSize="2xl">
+                    Valor $ {park.price_per_hour}
+                  </Text>
+                </Stack>
+              </CardBody>
+
+              <Divider />
+            </Card>
+          );
+        })
+      )}
+    </Wrap>
   );
 };
 

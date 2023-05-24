@@ -1,5 +1,14 @@
+import React, { useContext } from "react";
+import {
+  Input,
+  Button,
+  Text,
+  Box,
+  Center,
+  Flex,
+  Stack,
+} from "@chakra-ui/react";
 import React from "react";
-import { Input, Button, Text, Box, Center } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import useInput from "../hooks/useInput";
 import axios from "axios";
@@ -24,81 +33,71 @@ const Login = () => {
       .post("http://localhost:8080/api/user/login", logUser, {
         withCredentials: true,
       })
-      .then((res) => res.data.data)
-      .then((res) => {
-        if (res.admin == true) {
-          dispatch(addUser(res));
+      .then((res) => res.data)
+      .then(({ data, message }) => {
+        console.log("data", data);
+        if (data.admin == true) {
+          dispatch(addUser(data));
           navigate("/admin");
         } else {
-          dispatch(addUser(res));
+          dispatch(addUser(data));
           navigate("/");
         }
       })
-
-      .catch((err) => console.error(err));
+      .catch(({ message }) => alert("Email or password invalid"));
   };
 
   return (
     <>
-      <Center h="75%" color="white" marginTop={"5%"}>
+      <Center
+        h="75%"
+        color="white"
+        marginTop={"5%"}
+        borderWidth="3px"
+        borderRadius="lg"
+        width={"50%"}
+      >
         <Box
-          w={"75%"}
-          maxW="50%"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
+          display="inline-block"
+          p={"50px"}
+          alignItems="center"
+          justifyContent={"center"}
+          color="black"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="2xl"
+          textTransform="uppercase"
         >
-          <Box p="6">
-            <Box display="flex" alignItems="center" justifyContent={"center"}>
-              <Box
-                color="black"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="2xl"
-                textTransform="uppercase"
-                ml="2"
-                w={"80%"}
-              >
-                <br />
-                <Text fontSize="4xl">Iniciar Sesion</Text>
-                <br />
-                <br />
-                <form onSubmit={handleSubmit}>
-                  <Input
-                    {...email}
-                    type="text"
-                    htmlSize={50}
-                    width="auto"
-                    placeholder="email"
-                    required
-                  />
-                  <br />
-                  <br />
+          <Text fontSize="4xl" textAlign={"center"}>
+            Iniciar Sesion
+          </Text>
+          <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
+            <Stack p={"20px"}>
+              <Input
+                {...email}
+                backgroundColor={"white"}
+                htmlSize={50}
+                type="text"
+                placeholder="email"
+                required
+              />
+            </Stack>
 
-                  <Input
-                    {...password}
-                    htmlSize={50}
-                    width="auto"
-                    type="password"
-                    placeholder="Contraseña"
-                    required
-                  />
-                  <br />
-                  <br />
-                  {/* <Link to="/signup">
-                    <h6> No tengo cuenta en miPark </h6>
-                  </Link> */}
-                  <br />
-                  <br />
-                  <Button colorScheme="blue" type="submit">
-                    Iniciar Sesion
-                  </Button>
-                </form>
-                <br />
-                <br />
-              </Box>
-            </Box>
-          </Box>
+            <Stack p={"20px"}>
+              <Input
+                {...password}
+                type="password"
+                placeholder="Contraseña"
+                backgroundColor={"white"}
+                required
+              />
+            </Stack>
+            <Stack>
+              <Button colorScheme="blue" type="submit" m={8}>
+                Iniciar Sesion
+              </Button>
+            </Stack>
+          </form>
         </Box>
       </Center>
     </>

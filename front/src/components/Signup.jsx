@@ -29,74 +29,73 @@ const Signup = () => {
 
   return (
     <>
-      <Center h="75%" color="white" marginTop={"5%"}>
+      <Center
+        h="75%"
+        color="white"
+        marginTop={"5%"}
+        borderWidth="3px"
+        borderRadius="lg"
+        width={"50%"}
+      >
         <Box
-          w={"75%"}
-          maxW="50%"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
+          display="inline-block"
+          p={"50px"}
+          alignItems="center"
+          justifyContent={"center"}
+          color="black"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="2xl"
+          textTransform="uppercase"
         >
-          <Box p="6">
-            <Box display="flex" alignItems="center" justifycontent={"center"}>
-              <Box
-                color="black"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="2xl"
-                textTransform="uppercase"
-                ml="2"
-                w={"80%"}
-              >
-                <br />
-                <Text fontSize="4xl">Registrarse</Text>
-                <br />
+          <Text fontSize="4xl" textAlign={"center"}>
+            Registrarse
+          </Text>
 
-                <form onSubmit={clickHandler}>
-                  <Stack spacing={5}>
-                    <Input {...firstName} placeholder="Nombre" required />
+          <form onSubmit={clickHandler} style={{ padding: "30px" }}>
+            <Stack spacing={5}>
+              <Input
+                {...firstName}
+                backgroundColor={"white"}
+                placeholder="Nombre"
+                required
+              />
 
-                    <br />
-                    <Input
-                      {...lastName}
-                      htmlSize={50}
-                      type="text"
-                      width="auto"
-                      placeholder="Apellido"
-                      required
-                    />
-                    <br />
+              <Input
+                {...lastName}
+                backgroundColor={"white"}
+                htmlSize={50}
+                type="text"
+                width="auto"
+                placeholder="Apellido"
+                required
+              />
 
-                    <Input
-                      {...email}
-                      htmlSize={50}
-                      type="email"
-                      width="auto"
-                      placeholder="email"
-                      required
-                    />
-                    <br />
+              <Input
+                {...email}
+                backgroundColor={"white"}
+                htmlSize={50}
+                type="email"
+                width="auto"
+                placeholder="email"
+                required
+              />
 
-                    <Input
-                      {...password}
-                      htmlSize={50}
-                      type="password"
-                      width="auto"
-                      placeholder="Contraseña"
-                      required
-                    />
-                    <br />
-                    <br />
-                    <Button colorScheme="blue" type="submit">
-                      Enviar
-                    </Button>
-                    <br />
-                    <br />
-                  </Stack>
-                </form>
-              </Box>
-            </Box>
-          </Box>
+              <Input
+                {...password}
+                backgroundColor={"white"}
+                htmlSize={50}
+                type="password"
+                width="auto"
+                placeholder="Contraseña"
+                required
+              />
+
+              <Button colorScheme="blue" type="submit">
+                Enviar
+              </Button>
+            </Stack>
+          </form>
         </Box>
       </Center>
     </>

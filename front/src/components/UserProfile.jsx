@@ -67,6 +67,7 @@ const UserProfile = () => {
           justifyItems="center"
           bg="gray.800"
           color="white"
+          width="100%"
           py={12}
           px={6}
         >
