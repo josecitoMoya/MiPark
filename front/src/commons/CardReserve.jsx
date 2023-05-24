@@ -66,7 +66,7 @@ const CardReserve = ({ reserve }) => {
     } else {
       toast({
         title: "Can't delete reservation",
-        description: "You can only cancel an hour before",
+        description: "You can only cancel up to an hour before the reservation time",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -135,7 +135,7 @@ const CardReserve = ({ reserve }) => {
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader>Reserve Cancelled</PopoverHeader>
-                <PopoverBody>The reservation was canceled</PopoverBody>
+                <PopoverBody>The reservation was cancelled</PopoverBody>
               </PopoverContent>
             </Popover>
           )}

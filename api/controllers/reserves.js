@@ -1,9 +1,11 @@
+const { Users } = require("../models");
 const Parkings = require("../models/Parkings");
 const Reserves = require("../models/Reserves");
 const {
   enviarEmailConfirmacion,
   enviarEmailCancelacion,
 } = require("../services/email_sender.js");
+const UserController = require("./user");
 
 class ReservesController {
   // Aca en el req.body tengo que recibir { un objeto = { ["15","16","17"] , clientId: 3 , parkingId: 4 }}  <= EJEMPLO
@@ -19,6 +21,23 @@ class ReservesController {
           model: Parkings,
           association: "parking",
           foreignKey: "parkingId",
+        },
+      });
+      return res
+        .status(200)
+        .send({ message: "Reserves found", data: reserves });
+    } catch (error) {
+      return res.status(500).send({ message: "Error searching reserve" });
+    }
+  }
+
+  static async allReservesAdmin(req, res) {
+    try {
+      const reserves = await Reserves.findAll({
+        include: {
+          id: Users.id,
+          association: "client",
+          foreignKey: "clientId",
         },
       });
       return res
@@ -45,8 +64,7 @@ class ReservesController {
   }
 
   static async addReserve(req, res) {
-    let email = req.body.email;
-    let address = req.body.address;
+    let { email, address, date } = req.body
     try {
       const hours = req.body.hours;
       for (let i = 0; i < hours.length; i++) {
@@ -59,7 +77,7 @@ class ReservesController {
         };
         const data = await Reserves.create(reserve);
       }
-      const dataEmail = await enviarEmailConfirmacion(email, address);
+      const sentEmail = await enviarEmailConfirmacion(email, address, date, hours);
       return res.status(201).send({ message: "Added reserve" });
     } catch (error) {
       return res.status(500).send({ message: "Error adding reserve" });
@@ -84,8 +102,7 @@ class ReservesController {
   }
 
   static async updateState(req, res) {
-    let email = req.body.email;
-    let address = req.body.address;
+    let { email, address, date, hour } = req.body;
     try {
       const id = req.params.id.slice(1);
       const state = req.query;
@@ -101,7 +118,7 @@ class ReservesController {
       });
       if (reserve) {
         const data = await reserve.update(state);
-        const dataEmail = await enviarEmailCancelacion(email, address);
+        const sentEmail = await enviarEmailCancelacion(email, address, date, hour);
       } else {
         return res.status(204).send({ message: "Reserve couldn't be found" });
       }

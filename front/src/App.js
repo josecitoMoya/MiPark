@@ -20,6 +20,8 @@ import AdminUser from "./components/AdminUsers";
 import UserProfile from "./components/UserProfile";
 import AdminParks from "./components/Admin_parks";
 import { Flex, Grid, GridItem } from "@chakra-ui/layout";
+import AdminReservations from "./components/Admin_reservations";
+
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -35,7 +37,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
-  //Fin de persisntencia
+  //Fin de persistencia
 
   const park = useSelector((state) => state.reserva);
 

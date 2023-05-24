@@ -72,13 +72,13 @@ const Navbar2 = () => {
           {admin == true ? (
             <Link to={"/admin"}>
               <Text fontFamily={"serif"} fontSize={"7xl"}>
-                miPark
+                MiPark
               </Text>
             </Link>
           ) : (
             <Link to={"/"}>
               <Text fontFamily={"serif"} fontSize={"7xl"}>
-                miPark
+                MiPark
               </Text>
             </Link>
           )}
@@ -110,9 +110,6 @@ const Navbar2 = () => {
             <DrawerBody alignItems={"center"} p={10} w={"400px"}>
               {firstName ? (
                 <>
-                  <Button w={"250px"} onClick={onClose}>
-                    Mi historial
-                  </Button>
                   <br />
                   <br />
                   <Link to={"/user"}>
