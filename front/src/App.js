@@ -22,7 +22,6 @@ import AdminParks from "./components/Admin_parks";
 import { Flex, Grid, GridItem } from "@chakra-ui/layout";
 import AdminReservations from "./components/Admin_reservations";
 
-
 function App() {
   const user = useSelector((state) => state.user);
 
@@ -71,7 +70,10 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/parkings" element={<AdminParks />}></Route>
               <Route path="/admin/users" element={<AdminUser />}></Route>
-              <Route path="/admin/reserves"></Route>
+              <Route
+                path="/admin/reserves"
+                element={<AdminReservations />}
+              ></Route>
               <Route
                 path="/admin/user/:userId"
                 element={<UserProfile />}
