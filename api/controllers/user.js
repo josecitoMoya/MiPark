@@ -36,7 +36,7 @@ class UserController {
         .cookie("token", token)
         .send({ message: "The user are logedd", data: user });
     } else {
-      return res.status(401).send({ message: "Invalid Passeord" });
+      return res.status(401).send({ message: "Invalid Password" });
     }
   }
 

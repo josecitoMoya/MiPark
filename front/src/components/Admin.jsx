@@ -54,11 +54,12 @@ const Admin = () => {
   console.log("SOY PARKINGS", users);
 
   return (
-    <Box maxW={"80%"} mt={"10%"}>
+    <Box maxW={"80%"} m={"20px"}>
       <Card
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
+        bg={"whitesmoke"}
       >
         <Image
           objectFit="cover"
@@ -96,6 +97,7 @@ const Admin = () => {
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
+        bg={"whitesmoke"}
       >
         <Image
           objectFit="cover"
@@ -128,6 +130,7 @@ const Admin = () => {
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
         variant="outline"
+        bg={"whitesmoke"}
       >
         <Image
           objectFit="cover"

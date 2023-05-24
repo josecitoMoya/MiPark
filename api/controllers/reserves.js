@@ -59,7 +59,7 @@ class ReservesController {
         };
         const data = await Reserves.create(reserve);
       }
-      await enviarEmailConfirmacion(email, address);
+      const dataEmail = await enviarEmailConfirmacion(email, address);
       return res.status(201).send({ message: "Added reserve" });
     } catch (error) {
       return res.status(500).send({ message: "Error adding reserve" });
@@ -101,7 +101,7 @@ class ReservesController {
       });
       if (reserve) {
         const data = await reserve.update(state);
-        await enviarEmailCancelacion(email, address);
+        const dataEmail = await enviarEmailCancelacion(email, address);
       } else {
         return res.status(204).send({ message: "Reserve couldn't be found" });
       }

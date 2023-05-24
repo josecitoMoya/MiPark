@@ -44,19 +44,25 @@ const CardReserve = ({ reserve }) => {
       axios
         .put(
           `http://localhost:8080/api/reserves/state:${reserve.id}?state=cancelled`,
-          { withCredentials: true, email: email, address: address }
+          {
+            withCredentials: true,
+            email: email,
+            address: address,
+            date: reserve.date,
+            hour: reserve.hour,
+          }
         )
         .then(({ data }) => data)
         .then(({ message, data }) => {
           setUpdateReserve(data);
-          toast({
-            title: "Reserve delete.",
-            description: message,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-          });
         });
+      toast({
+        title: "Reserve delete.",
+        description: `Email sent with info: ${user.email}`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     } else {
       toast({
         title: "Can't delete reservation",

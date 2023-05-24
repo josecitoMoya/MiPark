@@ -1,4 +1,3 @@
-import "./App.css";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { Route, Routes } from "react-router";
@@ -20,6 +19,7 @@ import Admin from "./components/Admin";
 import AdminUser from "./components/AdminUsers";
 import UserProfile from "./components/UserProfile";
 import AdminParks from "./components/Admin_parks";
+import { Flex, Grid, GridItem } from "@chakra-ui/layout";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -40,35 +40,62 @@ function App() {
   const park = useSelector((state) => state.reserva);
 
   return (
-    <div className="App">
-      <Navbar2 />
-      <Sidebar />
-      <div style={{ marginLeft: "20%", marginTop: "130px" }}>
-        {user && user.admin ? (
-          <Routes>
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/parkings" element={<AdminParks />}></Route>
-            <Route path="/admin/users" element={<AdminUser />}></Route>
-            <Route path="/admin/reserves"></Route>
-            <Route path="/admin/user/:userId" element={<UserProfile />}></Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path="/" element={<List />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path={`/reservation/:id`} element={<Reserva />} />
-            <Route path={`/park/:id`} element={<Park />} />
-            <Route path="/anfitrion" element={<Anfitrion />} />
-            <Route path="/huesped" element={<Content />} />
-            <Route path="/reserves/:username/:id" element={<UserReserves />} />
-            <Route path="/user" element={<UserParks />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        )}
-      </div>
-    </div>
+    <Grid
+      templateAreas={`"header header"
+                  "nav main"
+                  `}
+      gridTemplateRows={"120px 1fr "}
+      gridTemplateColumns={"250px 1fr"}
+      h="100vh"
+      gap="0"
+      color="blackAlpha.700"
+      fontWeight="bold"
+    >
+      <GridItem bg="orange.300" area={"header"}>
+        <Navbar2 />
+      </GridItem>
+      <GridItem bg="pink.300" area={"nav"}>
+        <Sidebar />
+      </GridItem>
+      <GridItem
+        area={"main"}
+        backgroundImage="url(https://img.autosblogmexico.com/2019/10/18/27PgLqGM/estacionamiento-a353.jpg)"
+        backgroundSize="cover"
+        backgroundPosition="center"
+      >
+        <Flex justifyContent={"center"}>
+          {user && user.admin ? (
+            <Routes>
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/parkings" element={<AdminParks />}></Route>
+              <Route path="/admin/users" element={<AdminUser />}></Route>
+              <Route path="/admin/reserves"></Route>
+              <Route
+                path="/admin/user/:userId"
+                element={<UserProfile />}
+              ></Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path="/" element={<List />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path={`/reservation/:id`} element={<Reserva />} />
+              <Route path={`/park/:id`} element={<Park />} />
+              <Route path="/anfitrion" element={<Anfitrion />} />
+              <Route path="/huesped" element={<Content />} />
+              <Route
+                path="/reserves/:username/:id"
+                element={<UserReserves />}
+              />
+              <Route path="/user" element={<UserParks />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          )}
+        </Flex>
+      </GridItem>
+    </Grid>
   );
 }
 
