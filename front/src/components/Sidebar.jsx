@@ -30,17 +30,14 @@ const Sidebar = () => {
       >
         {admin ? (
           <Stack>
-            <Link>
+            <Link to={"/admin/users"}>
               <Button w={"100%"}>Usuarios</Button>
             </Link>
             <Link to={"/admin/parkings"}>
               <Button w={"100%"}>Cocheras</Button>
             </Link>
-            <Link>
+            <Link to={"/admin/reserves"}>
               <Button w={"100%"}>Reservas</Button>
-            </Link>
-            <Link>
-              <Button w={"100%"}>Transacciones</Button>
             </Link>
           </Stack>
         ) : (

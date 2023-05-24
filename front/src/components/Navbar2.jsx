@@ -115,9 +115,6 @@ const Navbar2 = () => {
             <DrawerBody alignItems={"center"} p={10} w={"400px"}>
               {firstName ? (
                 <>
-                  <Button w={"250px"} onClick={onClose}>
-                    Mi historial
-                  </Button>
                   <br />
                   <br />
                   <Link to={"/user"}>
