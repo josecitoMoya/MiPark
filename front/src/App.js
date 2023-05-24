@@ -35,7 +35,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
-  //Fin de persisntencia
+  //Fin de persistencia
 
   const park = useSelector((state) => state.reserva);
 

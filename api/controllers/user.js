@@ -11,9 +11,9 @@ class UserController {
     if (created) {
       return res
         .status(200)
-        .send({ message: "the user was successfully registered", data: user });
+        .send({ message: "The user was successfully registered", data: user });
     }
-    res.status(500).send({ message: "The user are register" });
+    res.status(500).send({ message: "The user couldn't be registered" });
   }
 
   static async loginUser(req, res) {
@@ -34,9 +34,9 @@ class UserController {
       res
         .status(200)
         .cookie("token", token)
-        .send({ message: "The user are logedd", data: user });
+        .send({ message: "The user is logged", data: user });
     } else {
-      return res.status(401).send({ message: "Invalid Passeord" });
+      return res.status(401).send({ message: "Invalid Password" });
     }
   }
 
@@ -64,10 +64,10 @@ class UserController {
         };
         return res
           .status(200)
-          .send({ message: "Token verificated", data: data });
+          .send({ message: "Token verified", data: data });
       }
     }
-    res.status(500).send({ message: "Token invalid" });
+    res.status(500).send({ message: "Invalid token" });
   }
 
   static async modUser(req, res) {

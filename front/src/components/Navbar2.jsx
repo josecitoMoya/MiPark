@@ -77,13 +77,13 @@ const Navbar2 = () => {
           {admin == true ? (
             <Link to={"/admin"}>
               <Text fontFamily={"serif"} fontSize={"7xl"}>
-                miPark
+                MiPark
               </Text>
             </Link>
           ) : (
             <Link to={"/"}>
               <Text fontFamily={"serif"} fontSize={"7xl"}>
-                miPark
+                MiPark
               </Text>
             </Link>
           )}
