@@ -64,8 +64,7 @@ class ReservesController {
   }
 
   static async addReserve(req, res) {
-    let email = req.body.email;
-    let address = req.body.address;
+    let { email, address, date } = req.body
     try {
       const hours = req.body.hours;
       for (let i = 0; i < hours.length; i++) {
@@ -78,7 +77,7 @@ class ReservesController {
         };
         const data = await Reserves.create(reserve);
       }
-      const sentEmail = await enviarEmailConfirmacion(email, address);
+      const sentEmail = await enviarEmailConfirmacion(email, address, date, hours);
       return res.status(201).send({ message: "Added reserve" });
     } catch (error) {
       return res.status(500).send({ message: "Error adding reserve" });
@@ -103,8 +102,7 @@ class ReservesController {
   }
 
   static async updateState(req, res) {
-    let email = req.body.email;
-    let address = req.body.address;
+    let { email, address, date, hour } = req.body;
     try {
       const id = req.params.id.slice(1);
       const state = req.query;
@@ -120,7 +118,7 @@ class ReservesController {
       });
       if (reserve) {
         const data = await reserve.update(state);
-        const sentEmail = await enviarEmailCancelacion(email, address);
+        const sentEmail = await enviarEmailCancelacion(email, address, date, hour);
       } else {
         return res.status(204).send({ message: "Reserve couldn't be found" });
       }
