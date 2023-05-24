@@ -77,12 +77,9 @@ const Reserva = () => {
     setImportetotal(total);
   };
 
-  // const compareNum = (a, b) => a - b;
-
   let horas = [];
   hour_reserve.map((registro) => {
     horas.push(registro.hour);
-    //   console.log(horas);
   });
 
   for (let i = hour_f; i <= hour_to; i++) {

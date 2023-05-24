@@ -43,16 +43,6 @@ const Admin = () => {
     }
   }, 0);
 
-  // const authorizedUsers = users.reduce((counter, parks) => {
-  //   if (parks.authorized === false) {
-  //     return counter + 1;
-  //   } else {
-  //     return counter;
-  //   }
-  // }, 0);
-
-  console.log("SOY PARKINGS", users);
-
   return (
     <Box maxW={"80%"} mt={"10%"}>
       <Card

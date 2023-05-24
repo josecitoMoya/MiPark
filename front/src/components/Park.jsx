@@ -34,7 +34,6 @@ const Park = () => {
     );
     const result = await search.json();
     setPark(result.data);
-    console.log(result.data);
     setHour_f(parseInt(result.data.from_hour));
     setHour_to(parseInt(result.data.to_hour));
   }
@@ -42,9 +41,6 @@ const Park = () => {
   useEffect(() => {
     getParks();
   }, []);
-
-  console.log(hour_f);
-  console.log(hour_to);
 
   const handleHour = (e) => {
     if (e.target.checked === true) {
@@ -54,7 +50,6 @@ const Park = () => {
       hours = posicion;
     }
     hours.sort(compareNum);
-    console.log(hours);
   };
 
   const compareNum = (a, b) => a - b;
