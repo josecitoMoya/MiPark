@@ -24,7 +24,12 @@ const AdminParks = () => {
       {parkings?.map((data, i) => (
         <Wrap key={i} w={"70%"} p={4}>
           <Link>
-            <AdminCards data={data} location={location} key={data.id} />
+            <AdminCards
+              data={data}
+              location={location}
+              key={data.id}
+              path={true}
+            />
           </Link>
         </Wrap>
       ))}
