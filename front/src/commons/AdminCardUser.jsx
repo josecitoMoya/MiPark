@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const AdminCardUser = ({ user }) => {
   const [userUpdate, setUserUpdate] = useState(user);
@@ -46,12 +47,17 @@ const AdminCardUser = ({ user }) => {
       p={"60px"}
     >
       <Flex justify="center" align="center" h="200px">
-        <Image boxSize={"200px"} src={avatar} alt={user.firstName} />
+        <Link to={`/admin/user/${user.id}`}>
+          <Image boxSize={"200px"} src={avatar} alt={user.firstName} />
+        </Link>
       </Flex>
       <Box p="4">
-        <Text fontWeight="bold" fontSize="xl" mb="2">
-          {user.firstName} {user.lastName}
-        </Text>
+        <Link to={`admin/user/${user.id}`}>
+          <Text fontWeight="bold" fontSize="xl" mb="2">
+            {user.firstName} {user.lastName}
+          </Text>
+        </Link>
+
         <Text fontSize="sm" color="gray.500" mb="4">
           {user.email}
         </Text>

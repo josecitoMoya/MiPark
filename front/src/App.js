@@ -17,6 +17,8 @@ import UserReserves from "./components/UserReserves";
 import Reserva from "./components/Reserva";
 import UserParks from "./components/User_parks";
 import Admin from "./components/Admin";
+import AdminUser from "./components/AdminUsers";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -45,8 +47,9 @@ function App() {
           <Routes>
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/parkings"></Route>
-            <Route path="/admin/users"></Route>
+            <Route path="/admin/users" element={<AdminUser />}></Route>
             <Route path="/admin/reserves"></Route>
+            <Route path="/admin/user/:userId" element={<UserProfile />}></Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         ) : (

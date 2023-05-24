@@ -24,7 +24,7 @@ const AdminUser = () => {
   }, []);
 
   return (
-    <Flex flexWrap={wrap}>
+    <Flex>
       {users.map((user, i) => {
         console.log("user:", user);
         if (user.email != actualUser.email)
