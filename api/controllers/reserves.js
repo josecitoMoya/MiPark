@@ -1,9 +1,11 @@
+const { Users } = require("../models");
 const Parkings = require("../models/Parkings");
 const Reserves = require("../models/Reserves");
 const {
   enviarEmailConfirmacion,
   enviarEmailCancelacion,
 } = require("../services/email_sender.js");
+const UserController = require("./user");
 
 class ReservesController {
   // Aca en el req.body tengo que recibir { un objeto = { ["15","16","17"] , clientId: 3 , parkingId: 4 }}  <= EJEMPLO
@@ -19,6 +21,23 @@ class ReservesController {
           model: Parkings,
           association: "parking",
           foreignKey: "parkingId",
+        },
+      });
+      return res
+        .status(200)
+        .send({ message: "Reserves founded", data: reserves });
+    } catch (error) {
+      return res.status(500).send({ message: "Error seraching reserve" });
+    }
+  }
+
+  static async allReservesAdmin(req, res) {
+    try {
+      const reserves = await Reserves.findAll({
+        include: {
+          id: Users.id,
+          association: "client",
+          foreignKey: "clientId",
         },
       });
       return res
