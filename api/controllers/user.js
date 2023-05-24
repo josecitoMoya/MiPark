@@ -1,5 +1,6 @@
 const User = require("../models/Users");
 const Token = require("../utils/Token");
+const { enviarEmailRegistroUser } = require("../services/email_sender.js");
 
 class UserController {
   static async registerUser(req, res) {
@@ -9,11 +10,12 @@ class UserController {
     });
 
     if (created) {
+      const email = await enviarEmailRegistroUser(req.body.email, req.body.firstName, req.body.lastName)
       return res
         .status(200)
-        .send({ message: "The user was successfully registered", data: user });
+        .send({ message: "the user was successfully registered", data: user });
     }
-    res.status(500).send({ message: "The user couldn't be registered" });
+    res.status(500).send({ message: "An error occured while trying to register user" });
   }
 
   static async loginUser(req, res) {
