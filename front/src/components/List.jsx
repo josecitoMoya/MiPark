@@ -36,7 +36,7 @@ const List = () => {
       ) : (
         parks.map((park) => {
           return (
-            <Card maxW="md" key={park.id} bg="blue.100">
+            <Card maxW="md" key={park.id} bg="whitesmoke">
               <CardBody>
                 <Image
                   //  onClick={() => handleReserva(park)}

@@ -101,102 +101,90 @@ const Content = () => {
   console.log("SOY LO QUE LLEGA DE FILTRAR LA CIUDAD", filtered);
 
   return (
-    <div>
-      <Center h="75%" color="white" marginTop={"5%"}>
-        <Box
-          w={"75%"}
-          maxW="50%"
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-        >
-          <Box p="6">
-            <Box display="flex" alignItems="center" justifyContent={"center"}>
-              <Box
-                color="black"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="2xl"
-                textTransform="uppercase"
-                ml="2"
-                w={"80%"}
-              >
-                <br />
-                <br />
-                <Text fontSize={"4xl"}>Busca tu cochera</Text>
-                <br />
-                <br />
-                <form onSubmit={handlerSearch}>
-                  <Box justifycontent={"space-between"}>
-                    <Stack spacing={5}>
-                      <Select
-                        placeholder="¿En que provincia buscas estacionar?"
-                        onClick={handleProvince}
-                      >
-                        {provinces.map((item, i) => (
-                          <option value={item.province} key={item.id}>
-                            {item.province}
-                          </option>
-                        ))}
-                      </Select>
-                      <br />
-                      <Select
-                        placeholder="Y, ¿en que ciudad?"
-                        onClick={handleCity}
-                      >
-                        {city.map((item, i) => (
-                          <option value={item.city} key={item.id}>
-                            {item.city}
-                          </option>
-                        ))}
-                      </Select>
-                      <br />
-                      {/* <Box alignContent={"space-between"}>
-                        <Checkbox onChange={handleTruckCheckbox}>
-                          Tenes una camioneta?
-                        </Checkbox>
-                        <br />
-                        <br />
-                        <Checkbox onChange={handleRoofCheckbox}>
-                          Buscas que sea techada?
-                        </Checkbox>
-                      </Box> */}
-                      <br />
-                      <br />
+    <>
+      <Center
+        textAlign={"center"}
+        h="75%"
+        color="white"
+        marginTop={"5%"}
+        borderWidth="3px"
+        borderRadius="lg"
+        width={"50%"}
+      >
+        <div>
+          <Box
+            display="inline-block"
+            p={"50px"}
+            alignItems="center"
+            justifyContent={"center"}
+            color="black"
+            fontWeight="semibold"
+            letterSpacing="wide"
+            fontSize="2xl"
+            textTransform="uppercase"
+          >
+            <Text fontSize={"4xl"} textAlign={"center"}>
+              Busca tu cochera
+            </Text>
 
-                      <Button type="submit" colorScheme="blue">
-                        Buscar cochera
-                      </Button>
-                      <br />
-                      <br />
-                    </Stack>
-                  </Box>
-                </form>
+            <form onSubmit={handlerSearch} style={{ padding: "30px" }}>
+              <Box justifycontent={"space-between"}>
+                <Stack spacing={5}>
+                  <Select
+                    placeholder="¿En que provincia buscas estacionar?"
+                    backgroundColor={"white"}
+                    onClick={handleProvince}
+                  >
+                    {provinces.map((item, i) => (
+                      <option value={item.province} key={item.id}>
+                        {item.province}
+                      </option>
+                    ))}
+                  </Select>
+                  <br />
+                  <Select
+                    backgroundColor={"white"}
+                    placeholder="Y, ¿en que ciudad?"
+                    onClick={handleCity}
+                  >
+                    {city.map((item, i) => (
+                      <option value={item.city} key={item.id}>
+                        {item.city}
+                      </option>
+                    ))}
+                  </Select>
+
+                  <Button type="submit" colorScheme="blue">
+                    Buscar cochera
+                  </Button>
+                  <br />
+                  <br />
+                </Stack>
               </Box>
-            </Box>
+            </form>
           </Box>
-        </Box>
+          <div>
+            {filtered.length > 0 ? (
+              filtered.map((item, i) => (
+                <div>
+                  <Wrap key={i} p={4}>
+                    <Link to={`/reservation/${item.id}`}>
+                      <Cards data={item} path={path} />
+                    </Link>
+                  </Wrap>
+                </div>
+              ))
+            ) : (
+              <Stack p={20}>
+                <Text fontSize={"xl"} color={"black"}>
+                  No se encontraron resultados
+                </Text>
+              </Stack>
+            )}
+          </div>
+        </div>
       </Center>
-      <br />
-      <br />
-      <br />
-      <br />
-      <div>
-        {filtered.length > 0 ? (
-          filtered.map((item, i) => (
-            <div>
-              <Wrap key={i} w={"70%"} p={4} ml={"12%"}>
-                <Link to={`/reservation/${item.id}`}>
-                  <Cards data={item} path={path} />
-                </Link>
-              </Wrap>
-            </div>
-          ))
-        ) : (
-          <Text>No se encontraron resultados</Text>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 

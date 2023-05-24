@@ -26,7 +26,6 @@ const AdminReservationsCards = ({ data }) => {
   return (
     <>
       <Card
-        w={"100%"}
         backgroundColor={"whitesmoke"}
         direction={{ base: "row", sm: "row" }}
         overflow="hidden"
@@ -45,10 +44,10 @@ const AdminReservationsCards = ({ data }) => {
           p={8}
         >
           FECHA DE RESERVA
-          <Text pt={8}>{data.date}</Text>
+          <Text pt={2}>{data.date}</Text>
         </Heading>
 
-        <CardBody display="flex" justifyContent="space-between" pl={"15%"}>
+        <CardBody display="flex" justifyContent="space-between">
           <Box>
             <Stack>
               <Heading
@@ -65,11 +64,11 @@ const AdminReservationsCards = ({ data }) => {
                 p={8}
               >
                 Horario de reserva
-                <Text pt={8}>{data.hour}:00</Text>
+                <Text pt={2}>{data.hour}:00</Text>
               </Heading>
             </Stack>
           </Box>
-          <Stack spacing={10} pt={"2"}>
+          <Stack spacing={5} pl={5} pt={2}>
             <Box w={"200px"}>
               <Badge
                 borderRadius={15}

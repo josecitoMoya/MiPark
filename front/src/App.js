@@ -46,7 +46,7 @@ function App() {
                   "nav main"
                   `}
       gridTemplateRows={"120px 1fr "}
-      gridTemplateColumns={"250px 1fr"}
+      gridTemplateColumns={"15% 1fr"}
       h="100vh"
       gap="0"
       color="blackAlpha.700"
@@ -64,7 +64,7 @@ function App() {
         backgroundSize="cover"
         backgroundPosition="center"
       >
-        <Flex justifyContent={"center"}>
+        <Flex justifyContent={"center"} p={2}>
           {user && user.admin ? (
             <Routes>
               <Route path="/admin" element={<Admin />} />

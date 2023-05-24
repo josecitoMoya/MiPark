@@ -22,12 +22,12 @@ const AdminReservations = () => {
         console.log("ESTO LLEGA AL PEDIR LAS RESERVAS", res.data.data)
       )
       .catch((err) => console.log(err));
-  }, []);
+  }, [reserves]);
 
   return reserves ? (
-    <Stack marginLeft={"10%"}>
+    <Stack>
       {reserves?.map((data, i) => (
-        <Wrap key={i} w={"70%"} p={4}>
+        <Wrap key={i} p={4}>
           <AdminReservationsCards data={data} key={data.id} />
         </Wrap>
       ))}
