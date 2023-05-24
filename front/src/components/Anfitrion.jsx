@@ -129,7 +129,7 @@ const Anfitrion = () => {
                 width={"auto"}
                 backgroundColor={"white"}
                 variant="outline"
-                type="number"
+                type="time"
                 placeholder="Desde que hora esta disponible"
                 required
               />
@@ -139,7 +139,7 @@ const Anfitrion = () => {
                 width={"auto"}
                 backgroundColor={"white"}
                 variant="outline"
-                type="number"
+                type="time"
                 placeholder="Hasta que hora esta disponible"
                 required
               />
