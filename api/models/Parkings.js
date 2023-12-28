@@ -9,33 +9,50 @@ Parkings.init(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    barrio: {
+    zone: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    ciudad: {
+    city: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    provincia: {
+    province: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    coordinates: {
+    from_hour: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    pricePerHour: {
+    to_hour: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    price_per_hour: {
+      type: Sequelize.STRING,
+      defaultValue: "250",
     },
     roof: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     },
-    vehicleType: {
+    van_able: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    image: {
       type: Sequelize.STRING,
-      defaultValue: "car",
+      defaultValue:
+        "https://static.tokkobroker.com/pictures/81485106017997863420224328799196031790185228762980714819055081839658331778906.jpg",
+    },
+    authorized: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    dropped: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
   },
   { sequelize: db, modelName: "parkings" }

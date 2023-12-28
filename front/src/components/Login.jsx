@@ -4,13 +4,16 @@ import { useNavigate } from "react-router";
 import useInput from "../hooks/useInput";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../redux/user";
 
 const Login = () => {
   const navigate = useNavigate();
   const email = useInput();
   const password = useInput();
-  const user = useContext(AuthContext);
+  const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user);
   const handleSubmit = (e) => {
     e.preventDefault();
     const logUser = {
@@ -18,61 +21,90 @@ const Login = () => {
       password: password.value,
     };
 
+    // dispatch(addUser(logUser));
+
     axios
       .post("http://localhost:8080/api/user/login", logUser, {
-        withCredentials: false,
+        withCredentials: true,
       })
       .then((res) => res.data.data)
       .then((res) => {
-        user.logUser(res);
-        navigate("/");
+        if (res.admin == true) {
+          dispatch(addUser(res));
+          navigate("/admin");
+        } else {
+          dispatch(addUser(res));
+          navigate("/");
+        }
       })
+
       .catch((err) => console.error(err));
   };
 
   return (
-    <div>
-      <Center>
+    <>
+      <Center h="75%" color="white" marginTop={"5%"}>
         <Box
-          marginTop={200}
-          maxW="2xl"
+          w={"75%"}
+          maxW="50%"
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
         >
-          <br />
-          <Text fontSize="6xl">Iniciar Sesion</Text>
-          <br />
-          <br />
-          <form onSubmit={handleSubmit}>
-            <Input
-              {...email}
-              type="text"
-              htmlSize={50}
-              width="auto"
-              placeholder="email"
-              required
-            />
-            <br />
-            <br />
+          <Box p="6">
+            <Box display="flex" alignItems="center" justifyContent={"center"}>
+              <Box
+                color="black"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                fontSize="2xl"
+                textTransform="uppercase"
+                ml="2"
+                w={"80%"}
+              >
+                <br />
+                <Text fontSize="4xl">Iniciar Sesion</Text>
+                <br />
+                <br />
+                <form onSubmit={handleSubmit}>
+                  <Input
+                    {...email}
+                    type="text"
+                    htmlSize={50}
+                    width="auto"
+                    placeholder="email"
+                    required
+                  />
+                  <br />
+                  <br />
 
-            <Input
-              {...password}
-              htmlSize={50}
-              width="auto"
-              type="password"
-              placeholder="Contraseña"
-              required
-            />
-            <br />
-            <br />
-            <Button colorScheme="blue" type="submit">
-              Enviar
-            </Button>
-          </form>
+                  <Input
+                    {...password}
+                    htmlSize={50}
+                    width="auto"
+                    type="password"
+                    placeholder="Contraseña"
+                    required
+                  />
+                  <br />
+                  <br />
+                  {/* <Link to="/signup">
+                    <h6> No tengo cuenta en miPark </h6>
+                  </Link> */}
+                  <br />
+                  <br />
+                  <Button colorScheme="blue" type="submit">
+                    Iniciar Sesion
+                  </Button>
+                </form>
+                <br />
+                <br />
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Center>
-    </div>
+    </>
   );
 };
 

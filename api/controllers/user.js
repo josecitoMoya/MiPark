@@ -28,6 +28,7 @@ class UserController {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
+        id: req.body.id,
       };
       const token = Token.generateToken(payload);
       res
@@ -46,9 +47,12 @@ class UserController {
 
   static async getUser(req, res) {
     const token = req.cookies.token;
+
     if (token) {
       const payload = await Token.validateToken(token);
-
+      if (!payload) {
+        return res.status(404).send({ message: "Token expired" });
+      }
       if (payload) {
         const user = await User.findOne({ where: { email: payload.email } });
         const data = {
@@ -56,6 +60,7 @@ class UserController {
           lastName: user.lastName,
           email: user.email,
           admin: user.admin,
+          id: user.id,
         };
         return res
           .status(200)
@@ -81,6 +86,17 @@ class UserController {
       });
     } catch (error) {
       res.status(500).json({ message: "User couldn't be updated" });
+    }
+  }
+
+  static async findUser(req, res) {
+    try {
+      const userId = req.params.userId;
+      console.log(userId);
+      const user = await User.findByPk(userId);
+      res.status(200).send({ message: "The user was found", data: user });
+    } catch (error) {
+      res.status(500).send({ message: "Error from serves searching user" });
     }
   }
 }

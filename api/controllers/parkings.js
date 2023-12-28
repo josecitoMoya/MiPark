@@ -1,46 +1,18 @@
 const models = require("../models/index.js");
 const Parkings = require("../models/Parkings.js");
-const Hours = require("../models/Hours.js")
 
 class ParkingController {
-  //RUTA PROVISORIA PARA PODER CREAR TABLAS DE PARKINGS EN EL SPRINT 1 CON POSTMAN
-  //Y USARLAS EN EL FRONT
-  static async crearParkingPrueba(req, res) {
-    const park = await Parkings.create(req.body);
-    if (park) {
-      return res
-        .status(200)
-        .send({
-          message: "Parking spot was successfully registered",
-          data: park,
-        });
-    }
-    res.status(404).send({ message: "Parking no pudo ser registrado" });
-  }
-
-  //RUTA PROVISORIA PARA PODER CREAR TABLAS DE HORARIOS EN EL SPRINT 1 CON POSTMAN
-  //Y USARLAS EN EL FRONT
-  static async crearHorariosPrueba(req, res) {
-    const horarios = await Hours.create(req.body);
-    if (horarios) {
-      return res
-        .status(200)
-        .send({
-          message: `Tabla de horarios para el parking con ID Nro ${horarios.parkingId} creada`,
-          data: horarios,
-        });
-    }
-    res.status(404).send({ message: "Tabla de horarios no pudo ser creada" });
-  }
-
   static async getAllParkings(req, res) {
-    const parks = await Parkings.findAll();
+    const parks = await Parkings.findAll({ where: { authorized: true } });
     if (parks.length > 0) {
-      return res
-        .status(200)
-        .send({ message: "Se envían los parkings registrados", data: parks });
+      return res.status(200).send({
+        message: "Authorized parkings are sent",
+        data: parks,
+      });
     }
-    return res.status(204).send({ message: "No hay parkings registrados." });
+    return res
+      .status(204)
+      .send({ message: "There are no authorized parkings." });
   }
 
   static async getOneParking(req, res) {
@@ -50,63 +22,69 @@ class ParkingController {
     if (!parking) return res.status(401).send({ message: "Invalid Parking" });
     res
       .status(200)
-      .send({ message: "Se envía el parking solicitado", data: parking });
+      .send({ message: "Requested parking is sent", data: parking });
   }
 
-  static async getParkingsPorBarrio(req, res) {
+  //RUTA PARA GET DEL FRONT:
+  //http://localhost:8080/api/parkings/search/?province=X&city=X&zone=X&roof=X&van_able=X
+  static async getParkingsByCategories(req, res) {
+    let request = {};
+    if (req.query.province) {
+      request.province = req.query.province;
+    }
+    if (req.query.city) {
+      request.city = req.query.city;
+    }
+    if (req.query.zone) {
+      request.zone = req.query.zone;
+    }
+    if (req.query.roof) {
+      request.roof = req.query.roof;
+    }
+    if (req.query.van_able) {
+      request.van_able = req.query.van_able;
+    }
+    if (req.query.id) {
+      request.ownerId = req.query.id;
+    }
     const parkings = await Parkings.findAll({
-      where: { barrio: req.params.nombre },
+      where: request,
     });
-    if (!parkings)
-      return res.status(204).send({
-        message: "No hay parkings registrados en el barrio indicado.",
+    if (parkings.length === 0)
+      return res.status(200).send({
+        message: "There are no authorized parkings by the selected parameters.",
       });
     res.status(200).send({
-      message: "Se envía el resultado de la búsqueda",
+      message: "Parkings are sent.",
       data: parkings,
     });
   }
 
-  static async getParkingsPorCiudad(req, res) {
-    const parkings = await Parkings.findAll({
-      where: { ciudad: req.params.nombre },
-    });
-    if (!parkings)
-      return res.status(204).send({
-        message: "No hay parkings registrados en la ciudad indicada.",
+  static async createParking(req, res) {
+    const park = await Parkings.create(req.body);
+    if (park) {
+      return res.status(200).send({
+        message: "Parking creation request was successfully registered",
+        data: park,
       });
-    res.status(200).send({
-      message: "Se envía el resultado de la búsqueda",
-      data: parkings,
-    });
+    }
+    res
+      .status(404)
+      .send({ message: "Parking creation request couldn't be registered" });
   }
 
-  static async getParkingsPorProvincia(req, res) {
-    const parkings = await Parkings.findAll({
-      where: { provincia: req.params.nombre },
-    });
-    if (!parkings)
-      return res.status(204).send({
-        message: "No hay parkings registrados en la provincia indicada.",
-      });
-    res.status(200).send({
-      message: "Se envía el resultado de la búsqueda",
-      data: parkings,
-    });
-  }
-
-  static async getHorariosPorId(req, res) {
+  static async dropParking(req, res) {
     const parking = await Parkings.findOne({
-      where: { id: req.params.id },
+      where: { id: req.body.id },
     });
-    const horarios = await Hours.findOne({ where: { parkingId: parking.id } });
-    let horariosDisponibles = [];
-    for (let horario in horarios) {
-      if (horario === true) horarios.push(horario);
+    if (parking.dropped) {
+      await parking.update({ dropped: false });
+    } else {
+      await parking.update({ dropped: true });
     }
     res.status(200).send({
-      message: "Se envía el resultado de la búsqueda",
-      data: { parking: parking, horarios: horariosDisponibles },
+      message: "Parking was successfully modifiqued",
+      data: parking,
     });
   }
 }
